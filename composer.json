@@ -1,0 +1,45 @@
+{
+    "name": "reflar/pretty-mail",
+    "description": "Make emails pretty",
+    "keywords": [
+        "extension",
+        "flarum",
+        "mail"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+          "name": "Charlie K",
+          "email": "issyrocks12@reflar.email",
+          "homepage": "https://reflar.io"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ReFlar/pretty-mail/issues",
+        "source": "https://github.com/ReFlar/pretty-mail"
+    },
+    "require": {
+        "flarum/core": "^0.1.0-beta.7.1"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "ReFlar Pretty mail",
+            "icon": {
+                "name": "envelope",
+                "backgroundColor": "#263238",
+                "color": "#FFF"
+            }
+        }
+    },
+    "autoload": {
+        "exclude-from-classmap": [
+            "vendor\\Flarum\\Core\\Listener\\EmailConfirmationMailer.php"
+        ],
+        "psr-4": {
+            "Reflar\\PrettyMail\\": "src/",
+
+            "Flarum\\Core\\Listener\\": "src/Overrides"
+        }
+    }
+}
