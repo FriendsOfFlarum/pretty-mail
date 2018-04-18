@@ -7,9 +7,9 @@ return [
     'up' => function (Builder $schema, ConnectionInterface $db) {
         $db->table('settings')->insert([
             [
-                'key' => 'reflar-prettymail.mailhtml',
-                'value' => file_get_contents(__DIR__ . '/../resources/views/mail.blade.php')
-            ]
+                'key'   => 'reflar-prettymail.mailhtml',
+                'value' => file_get_contents(__DIR__.'/../resources/views/mail.blade.php'),
+            ],
         ]);
-    }
+    },
 ];

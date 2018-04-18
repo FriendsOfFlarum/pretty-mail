@@ -17,16 +17,15 @@ class Mailer extends LaravelMailer
         $app = app();
         $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
 
-        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../resources/views/mail.blade.php')) {
-            file_put_contents(__DIR__ . '/../resources/views/mail.blade.php', $settings->get('reflar-prettymail.mailhtml'));
+        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/mail.blade.php')) {
+            file_put_contents(__DIR__.'/../resources/views/mail.blade.php', $settings->get('reflar-prettymail.mailhtml'));
         }
 
-
         return $this->send('pretty-mail::mail', [
-            'body' => $body,
+            'body'     => $body,
             'settings' => $settings,
-            'baseUrl' => $app->url(),
-            'link' => $matches[0]
+            'baseUrl'  => $app->url(),
+            'link'     => $matches[0],
         ], $callback);
     }
 }
