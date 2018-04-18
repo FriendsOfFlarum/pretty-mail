@@ -3,9 +3,9 @@
 namespace Reflar\PrettyMail\Listeners;
 
 use DirectoryIterator;
+use Flarum\Event\ConfigureLocales;
 use Flarum\Event\ConfigureWebApp;
 use Illuminate\Contracts\Events\Dispatcher;
-use Flarum\Event\ConfigureLocales;
 
 class AddClientAssets
 {
@@ -19,7 +19,7 @@ class AddClientAssets
     {
         if ($event->isAdmin()) {
             $event->addAssets([
-                __DIR__ . '/../../js/admin/dist/extension.js',
+                __DIR__.'/../../js/admin/dist/extension.js',
             ]);
             $event->addBootstrapper('reflar/prettymail/main');
         }
@@ -27,9 +27,9 @@ class AddClientAssets
 
     public function addLocales(ConfigureLocales $event)
     {
-        foreach (new DirectoryIterator(__DIR__ . '/../../resources/locale') as $file) {
+        foreach (new DirectoryIterator(__DIR__.'/../../resources/locale') as $file) {
             if ($file->isFile() && in_array($file->getExtension(), ['yml', 'yaml'])) {
-                $event->locales->addTranslations($file->getBasename('.' . $file->getExtension()), $file->getPathname());
+                $event->locales->addTranslations($file->getBasename('.'.$file->getExtension()), $file->getPathname());
             }
         }
     }
