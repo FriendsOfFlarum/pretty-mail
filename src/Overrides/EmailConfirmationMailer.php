@@ -89,6 +89,10 @@ class EmailConfirmationMailer
 
         $body = Fatdown::render(Fatdown::parse($body));
 
+        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../../resources/views/mail.blade.php')) {
+            file_put_contents(__DIR__ . '/../../resources/views/mail.blade.php', $this->settings->get('reflar-prettymail.mailhtml'));
+        }
+
         $this->mailer->send('pretty-mail::mail', [
             'body' => $body,
             'settings' => $this->settings,
@@ -96,7 +100,7 @@ class EmailConfirmationMailer
             'link' => $matches[0]
             ], function (Message $message) use ($user, $data) {
             $message->to($user->email);
-            $message->subject('['.$data['{forum}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
+            $message->subject('['.$data['{admin}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
         });
     }
 
@@ -110,9 +114,23 @@ class EmailConfirmationMailer
 
         $body = $this->translator->trans('core.email.confirm_email.body', $data);
 
-        $this->mailer->raw($body, function (Message $message) use ($email, $data) {
+        $matches = [];
+        preg_match("/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/m", $body, $matches);
+
+        $body = Fatdown::render(Fatdown::parse($body));
+
+        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../../resources/views/mail.blade.php')) {
+            file_put_contents(__DIR__ . '/../../resources/views/mail.blade.php', $this->settings->get('reflar-prettymail.mailhtml'));
+        }
+
+        $this->mailer->send('pretty-mail::mail', [
+            'body' => $body,
+            'settings' => $this->settings,
+            'baseUrl' => app()->url(),
+            'link' => $matches[0]
+        ], function (Message $message) use ($email, $data) {
             $message->to($email);
-            $message->subject('['.$data['{forum}'].'] '.$this->translator->trans('core.email.confirm_email.subject'));
+            $message->subject('['.$data['{admin}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
         });
     }
 
@@ -143,7 +161,7 @@ class EmailConfirmationMailer
         return [
             '{username}' => $user->username,
             '{url}' => $this->url->toRoute('confirmEmail', ['token' => $token->id]),
-            '{forum}' => $this->settings->get('forum_title')
+            '{admin}' => $this->settings->get('forum_title')
         ];
     }
 }

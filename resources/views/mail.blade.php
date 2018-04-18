@@ -18,14 +18,14 @@
             }
             .header {
                 border-bottom: 1px solid #e8ecf3;
-            }
-            .header a {
+             }
+             .header a {
                 color: {{ $settings->get('theme_primary_color') }};
                 text-decoration: none;
-            }
-            .footer {
+             }
+             .footer {
                 background: #e8ecf3;
-            }
+             }
         </style>
     </head>
 </html>

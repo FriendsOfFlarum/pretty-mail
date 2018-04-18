@@ -1,0 +1,8 @@
+reflar-prettymail:
+  admin:
+    modal:
+      title: Pretty Mail Settings
+      label: Email Template
+      reset: Revert to Default
+      confirm: Are you sure you want to revert to the default template?
+      help: 'You have several variables to work with: "$body" will contain the actual content of the email, "$baseUrl" will contain your forum url, "$settings" allows you to interact with the SettingsRepositoryInterface, and "$link" which contains the link within the email. See the default template for how to use each variable.'
