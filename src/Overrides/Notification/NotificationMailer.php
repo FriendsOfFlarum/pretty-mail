@@ -39,28 +39,28 @@ class NotificationMailer
 
     /**
      * @param MailableInterface $blueprint
-     * @param User $user
+     * @param User              $user
      */
     public function send(MailableInterface $blueprint, User $user)
     {
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('reflar-prettymail.' . $blade[1]) !== file_get_contents(__DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php')) {
-            file_put_contents(__DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php',
-                $this->settings->get('reflar-prettymail.' . $blade[1]));
+        if ($this->settings->get('reflar-prettymail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
+            file_put_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
+                $this->settings->get('reflar-prettymail.'.$blade[1]));
         }
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__ . "/../../../../../../assets"));
+        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__.'/../../../../../../assets'));
 
         $this->mailer->send(
-            'pretty-mail::emails.' . $blade[1],
+            'pretty-mail::emails.'.$blade[1],
             [
-                'user' => $user,
-                'baseUrl' => app()->url(),
-                'blueprint' => $blueprint,
-                'settings' => $this->settings,
-                'forumStyle' => file_get_contents(__DIR__ . "/../../../../../../assets/" . reset($file))
+                'user'       => $user,
+                'baseUrl'    => app()->url(),
+                'blueprint'  => $blueprint,
+                'settings'   => $this->settings,
+                'forumStyle' => file_get_contents(__DIR__.'/../../../../../../assets/'.reset($file)),
             ],
             function (Message $message) use ($blueprint, $user) {
                 $message->to($user->email, $user->username)
