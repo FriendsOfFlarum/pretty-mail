@@ -1,12 +1,16 @@
 <?php
 
-/*
- * This file is part of Flarum.
+/**
  *
- * (c) Toby Zerner <toby.zerner@gmail.com>
+ *  This file is part of reflar/gamification
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ *  Copyright (c) ReFlar.
+ *
+ *  http://reflar.io
+ *
+ *  For the full copyright and license information, please view the license.md
+ *  file that was distributed with this source code.
+ *
  */
 
 namespace Flarum\Core\Listener;
@@ -48,12 +52,16 @@ class EmailConfirmationMailer
 
     /**
      * @param \Flarum\Settings\SettingsRepositoryInterface $settings
-     * @param Mailer                                       $mailer
-     * @param UrlGenerator                                 $url
-     * @param TranslatorInterface                          $translator
+     * @param Mailer $mailer
+     * @param UrlGenerator $url
+     * @param TranslatorInterface $translator
      */
-    public function __construct(SettingsRepositoryInterface $settings, Mailer $mailer, UrlGenerator $url, TranslatorInterface $translator)
-    {
+    public function __construct(
+        SettingsRepositoryInterface $settings,
+        Mailer $mailer,
+        UrlGenerator $url,
+        TranslatorInterface $translator
+    ) {
         $this->settings = $settings;
         $this->mailer = $mailer;
         $this->url = $url;
@@ -84,24 +92,22 @@ class EmailConfirmationMailer
 
         $body = $this->translator->trans('core.email.activate_account.body', $data);
 
-        $matches = [];
-        preg_match("/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/m", $body, $matches);
+        $matches = $this->prepareData($body);
 
         $body = Fatdown::render(Fatdown::parse($body));
 
-        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../../resources/views/mail.blade.php')) {
-            file_put_contents(__DIR__.'/../../resources/views/mail.blade.php', $this->settings->get('reflar-prettymail.mailhtml'));
-        }
+        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__ . "/../../../../../../assets"));
 
-        $this->mailer->send('pretty-mail::mail', [
-            'body'     => $body,
+        $this->mailer->send('pretty-mail::emails.default', [
+            'body' => $body,
             'settings' => $this->settings,
-            'baseUrl'  => app()->url(),
-            'link'     => $matches[0],
-            ], function (Message $message) use ($user, $data) {
-                $message->to($user->email);
-                $message->subject('['.$data['{admin}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
-            });
+            'baseUrl' => app()->url(),
+            'forumStyle' => file_get_contents(__DIR__ . "/../../../../../../assets/" . reset($file)),
+            'link' => $matches[0],
+        ], function (Message $message) use ($user, $data) {
+            $message->to($user->email);
+            $message->subject('[' . $data['{admin}'] . '] ' . $this->translator->trans('core.email.activate_account.subject'));
+        });
     }
 
     /**
@@ -114,28 +120,44 @@ class EmailConfirmationMailer
 
         $body = $this->translator->trans('core.email.confirm_email.body', $data);
 
-        $matches = [];
-        preg_match("/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/m", $body, $matches);
+        $matches = $this->prepareData($body);
 
         $body = Fatdown::render(Fatdown::parse($body));
 
-        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../../resources/views/mail.blade.php')) {
-            file_put_contents(__DIR__.'/../../resources/views/mail.blade.php', $this->settings->get('reflar-prettymail.mailhtml'));
-        }
+        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__ . "/../../../../../../assets"));
 
-        $this->mailer->send('pretty-mail::mail', [
-            'body'     => $body,
+        $this->mailer->send('pretty-mail::emails.default', [
+            'body' => $body,
             'settings' => $this->settings,
-            'baseUrl'  => app()->url(),
-            'link'     => $matches[0],
+            'baseUrl' => app()->url(),
+            'forumStyle' => file_get_contents(__DIR__ . "/../../../../../../assets/" . reset($file)),
+            'link' => $matches[0],
         ], function (Message $message) use ($email, $data) {
             $message->to($email);
-            $message->subject('['.$data['{admin}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
+            $message->subject('[' . $data['{admin}'] . '] ' . $this->translator->trans('core.email.activate_account.subject'));
         });
     }
 
     /**
-     * @param User   $user
+     * @param $body
+     * @return array
+     */
+    public function prepareData($body)
+    {
+        $matches = [];
+        preg_match("/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/m",
+            $body, $matches);
+
+        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../../../resources/views/emails/default.blade.php')) {
+            file_put_contents(__DIR__ . '/../../../resources/views/emails/default.blade.php',
+                $this->settings->get('reflar-prettymail.mailhtml'));
+        }
+
+        return $matches;
+    }
+
+    /**
+     * @param User $user
      * @param string $email
      *
      * @return EmailToken
@@ -151,7 +173,7 @@ class EmailConfirmationMailer
     /**
      * Get the data that should be made available to email templates.
      *
-     * @param User   $user
+     * @param User $user
      * @param string $email
      *
      * @return array
@@ -162,8 +184,8 @@ class EmailConfirmationMailer
 
         return [
             '{username}' => $user->username,
-            '{url}'      => $this->url->toRoute('confirmEmail', ['token' => $token->id]),
-            '{admin}'    => $this->settings->get('forum_title'),
+            '{url}' => $this->url->toRoute('confirmEmail', ['token' => $token->id]),
+            '{admin}' => $this->settings->get('forum_title'),
         ];
     }
 }

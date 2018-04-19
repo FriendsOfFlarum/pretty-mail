@@ -8,7 +8,7 @@ return [
         $db->table('settings')->insert([
             [
                 'key'   => 'reflar-prettymail.mailhtml',
-                'value' => file_get_contents(__DIR__.'/../resources/views/mail.blade.php'),
+                'value' => file_get_contents(__DIR__ . '/../resources/views/emails/default.blade.php'),
             ],
         ]);
     },

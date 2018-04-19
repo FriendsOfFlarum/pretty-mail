@@ -1,8 +1,15 @@
 reflar-prettymail:
   admin:
-    modal:
-      title: Pretty Mail Settings
-      label: Email Template
+    nav:
+      desc: Customize your html email templates.
+    settings:
+      label: Email Templates
       reset: Revert to Default
-      confirm: Are you sure you want to revert to the default template?
-      help: 'You have several variables to work with: "$body" will contain the actual content of the email, "$baseUrl" will contain your forum url, "$settings" allows you to interact with the SettingsRepositoryInterface, and "$link" which contains the link within the email. See the default template for how to use each variable.'
+      confirm: Are you sure you want to revert to the stock email template for
+      default: Default Template
+      newPost: Flarum-ext-subscriptions newPost Email
+      userMentioned: Flarum-ext-mentions userMentioned Email
+      postMentioned: Flarum-ext-mentions postMentioned Email
+      notifications: Notification templates
+      notificationHelp: 'It is recommended to use "$forumStyle" for these emails as they may contain BBCODE. These emails also have "$user" available which contains the entire user model of the user being emailed.'
+      help: '"$body" will contain the actual content of the email, "$forumStyle" contains the <strong>entire forum CSS</strong> "$baseUrl" contains your forum url, "$settings" allows you to interact with the SettingsRepositoryInterface, and "$link" contains the link within the email. See each template for how to use each variable.'

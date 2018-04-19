@@ -26,7 +26,7 @@
         "flarum-extension": {
             "title": "ReFlar Pretty mail",
             "icon": {
-                "name": "envelope",
+                "name": "envelope-open",
                 "backgroundColor": "#263238",
                 "color": "#FFF"
             }
@@ -34,12 +34,13 @@
     },
     "autoload": {
         "exclude-from-classmap": [
-            "vendor\\Flarum\\Core\\Listener\\EmailConfirmationMailer.php"
+            "/../../Flarum/Core/Listener/EmailConfirmationMailer.php",
+            "/../../Flarum/Core/Notification/NotificationMailer.php"
         ],
         "psr-4": {
             "Reflar\\PrettyMail\\": "src/",
 
-            "Flarum\\Core\\Listener\\": "src/Overrides"
+            "Flarum\\Core\\": "src/Overrides"
         }
     }
 }

@@ -18,14 +18,17 @@
             }
             .header {
                 border-bottom: 1px solid #e8ecf3;
-             }
-             .header a {
+            }
+            .header a {
                 color: {{ $settings->get('theme_primary_color') }};
                 text-decoration: none;
-             }
-             .footer {
+            }
+            .footer {
                 background: #e8ecf3;
-             }
+            }
+        </style>
+        <style>
+            {!! $forumStyle !!}
         </style>
     </head>
 </html>
@@ -36,7 +39,21 @@
         </div>
     </div>
     <div class="content">
-        {!! $body !!}
+        <div class="info">
+            <p>Hey {!! $user->display_name !!}!</p>
+
+            <p>{!! $blueprint->reply->user->username !!} replied to your post (#{!! $blueprint->post->number !!}) in {!! $blueprint->post->discussion->title !!}.</p>
+
+            <p>{!! app()->url() !!}/d/{!! $blueprint->reply->discussion_id !!}/{!! $blueprint->reply->number !!}</p>
+
+            ---
+
+        </div>
+        <br/>
+        <div class="post-content">
+            {!! $blueprint->reply->contentHtml !!}
+        </div>
+        <br/>
     </div>
     <div class="footer">
         <div class="content">
