@@ -18,19 +18,19 @@ class Mailer extends LaravelMailer
         $app = app();
         $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
 
-        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../resources/views/emails/default.blade.php')) {
-            file_put_contents(__DIR__ . '/../resources/views/emails/default.blade.php',
+        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/emails/default.blade.php')) {
+            file_put_contents(__DIR__.'/../resources/views/emails/default.blade.php',
                 $settings->get('reflar-prettymail.mailhtml'));
         }
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__ . "/../../../../assets"));
+        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__.'/../../../../assets'));
 
         return $this->send('pretty-mail::emails.default', [
-            'body' => $body,
-            'settings' => $settings,
-            'baseUrl' => $app->url(),
-            'forumStyle' => file_get_contents(__DIR__ . "/../../../../assets/" . reset($file)),
-            'link' => $matches[0],
+            'body'       => $body,
+            'settings'   => $settings,
+            'baseUrl'    => $app->url(),
+            'forumStyle' => file_get_contents(__DIR__.'/../../../../assets/'.reset($file)),
+            'link'       => $matches[0],
         ], $callback);
     }
 }
