@@ -20,7 +20,7 @@
         "source": "https://github.com/ReFlar/pretty-mail"
     },
     "require": {
-        "flarum/core": "^0.1.0-beta.7.1"
+        "flarum/core": "^0.1.0-beta.7"
     },
     "extra": {
         "flarum-extension": {
