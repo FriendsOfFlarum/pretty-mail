@@ -10,9 +10,9 @@
     "license": "MIT",
     "authors": [
         {
-          "name": "Charlie K",
-          "email": "issyrocks12@reflar.email",
-          "homepage": "https://reflar.io"
+            "name": "Charlie K",
+            "email": "issyrocks12@reflar.email",
+            "homepage": "https://reflar.io"
         }
     ],
     "support": {
@@ -33,14 +33,12 @@
         }
     },
     "autoload": {
-        "exclude-from-classmap": [
-            "/../../Flarum/Core/Listener/EmailConfirmationMailer.php",
-            "/../../Flarum/Core/Notification/NotificationMailer.php"
+        "files": [
+            "src/Overrides/User/EmailConfirmationMailer.php",
+            "src/Overrides/Notification/NotificationMailer.php"
         ],
         "psr-4": {
-            "Reflar\\PrettyMail\\": "src/",
-
-            "Flarum\\Core\\": "src/Overrides"
+            "Reflar\\PrettyMail\\": "src/"
         }
     }
 }

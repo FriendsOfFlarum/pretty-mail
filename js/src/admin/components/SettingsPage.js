@@ -3,7 +3,7 @@ import Button from "flarum/components/Button";
 import Page from 'flarum/components/Page';
 import saveSettings from "flarum/utils/saveSettings";
 
-export default class settingsPage extends Page {
+export default class SettingsPage extends Page {
 
     init() {
 

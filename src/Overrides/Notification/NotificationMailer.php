@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Flarum\Core\Notification;
+namespace Flarum\Notification;
 
-use Flarum\Core\User;
+use Flarum\User\User;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Mail\Message;
@@ -27,6 +27,12 @@ class NotificationMailer
      * @var SettingsRepositoryInterface
      */
     protected $settongs;
+
+    /**
+     * Flarum assets directory, to find out where the css is
+     * @var string
+     */
+    protected $assets_dir = (__DIR__ . '/../../../../../public/assets/');
 
     /**
      * @param Mailer $mailer
@@ -46,21 +52,23 @@ class NotificationMailer
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('reflar-prettymail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
-            file_put_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
-                $this->settings->get('reflar-prettymail.'.$blade[1]));
+        if ($this->settings->get('reflar-prettymail.' . $blade[1]) !== file_get_contents(__DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php')) {
+            file_put_contents(
+                __DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php',
+                $this->settings->get('reflar-prettymail.' . $blade[1])
+            );
         }
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir(__DIR__.'/../../../../../../assets'));
+        $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
 
         $this->mailer->send(
-            'pretty-mail::emails.'.$blade[1],
+            'pretty-mail::emails.' . $blade[1],
             [
                 'user'       => $user,
                 'baseUrl'    => app()->url(),
                 'blueprint'  => $blueprint,
                 'settings'   => $this->settings,
-                'forumStyle' => file_get_contents(__DIR__.'/../../../../../../assets/'.reset($file)),
+                'forumStyle' => file_get_contents($this->assets_dir . reset($file)),
             ],
             function (Message $message) use ($blueprint, $user) {
                 $message->to($user->email, $user->username)
