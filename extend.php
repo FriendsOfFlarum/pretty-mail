@@ -23,5 +23,8 @@ return [
     new Extend\Locales(__DIR__ . '/resources/locale'),
     function (Application $app) {
         $app->register(Providers\MailerProvider::class);
+        /** @var Dispatcher $events */
+        $events = $app['events'];
+        $events->subscribe(Listeners\InjectSettings::class);
     }
 ];

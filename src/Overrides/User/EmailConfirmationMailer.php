@@ -113,13 +113,16 @@ class EmailConfirmationMailer
 
         $body = Fatdown::render(Fatdown::parse($body));
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        $includeCSS = $this->settings->get('reflar-prettymail.includeCSS') == '1';
+        if ($includeCSS) {
+            $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        }
 
         $this->mailer->send('pretty-mail::emails.default', [
             'body'       => $body,
             'settings'   => $this->settings,
             'baseUrl'    => app()->url(),
-            'forumStyle' => file_get_contents($this->assets_dir . reset($file)),
+            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
             'link'       => $matches[0],
         ], function (Message $message) use ($email, $data) {
             $message->to($email);

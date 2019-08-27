@@ -59,7 +59,10 @@ class NotificationMailer
             );
         }
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        $includeCSS = $this->settings->get('reflar-prettymail.includeCSS') == '1';
+        if ($includeCSS) {
+            $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        }
 
         $this->mailer->send(
             'pretty-mail::emails.' . $blade[1],
@@ -68,7 +71,7 @@ class NotificationMailer
                 'baseUrl'    => app()->url(),
                 'blueprint'  => $blueprint,
                 'settings'   => $this->settings,
-                'forumStyle' => file_get_contents($this->assets_dir . reset($file)),
+                'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
             ],
             function (Message $message) use ($blueprint, $user) {
                 $message->to($user->email, $user->username)

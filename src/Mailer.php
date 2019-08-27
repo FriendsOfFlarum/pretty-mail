@@ -34,13 +34,16 @@ class Mailer extends LaravelMailer
             );
         }
 
-        $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        $includeCSS = $settings->get('reflar-prettymail.includeCSS') == '1';
+        if ($includeCSS) {
+            $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
+        }
 
         return $this->send('pretty-mail::emails.default', [
             'body'       => $body,
             'settings'   => $settings,
             'baseUrl'    => $app->url(),
-            'forumStyle' => file_get_contents($this->assets_dir . reset($file)),
+            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
             'link'       => $matches[0],
         ], $callback);
     }
