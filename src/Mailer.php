@@ -14,7 +14,7 @@ class Mailer extends LaravelMailer
      */
     protected $assets_dir = (__DIR__.'/../../../public/assets/');
 
-    public function raw($text, $callback)
+    public function raw($text, $callback, $use_fatdown = true)
     {
         $matches = [];
         preg_match(
@@ -23,7 +23,11 @@ class Mailer extends LaravelMailer
             $matches
         );
 
-        $body = Fatdown::render(Fatdown::parse($text));
+        if ($use_fatdown) {
+            $body = Fatdown::render(Fatdown::parse($text));
+        } else {
+            $body = $text;
+        }
 
         $app = app();
         $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
