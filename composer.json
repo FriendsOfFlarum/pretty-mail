@@ -26,7 +26,7 @@
         "flarum-extension": {
             "title": "ReFlar Pretty mail",
             "icon": {
-                "name": "envelope-open",
+                "name": "fas fa-envelope-open",
                 "backgroundColor": "#263238",
                 "color": "#FFF"
             }

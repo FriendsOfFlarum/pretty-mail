@@ -13,7 +13,7 @@ export default function() {
             'reflar-pretty-mail',
             AdminLinkButton.component({
                 href: app.route('reflar-pretty-mail'),
-                icon: 'envelope-open',
+                icon: 'fas fa-envelope-open',
                 children: 'Pretty Mail',
                 description: app.translator.trans('reflar-prettymail.admin.nav.desc'),
             })
