@@ -8,10 +8,11 @@ use s9e\TextFormatter\Bundles\Fatdown;
 class Mailer extends LaravelMailer
 {
     /**
-     * Flarum assets directory, to find out where the css is
+     * Flarum assets directory, to find out where the css is.
+     *
      * @var string
      */
-    protected $assets_dir = (__DIR__ . '/../../../public/assets/');
+    protected $assets_dir = (__DIR__.'/../../../public/assets/');
 
     public function raw($text, $callback)
     {
@@ -27,9 +28,9 @@ class Mailer extends LaravelMailer
         $app = app();
         $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
 
-        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../resources/views/emails/default.blade.php')) {
+        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/emails/default.blade.php')) {
             file_put_contents(
-                __DIR__ . '/../resources/views/emails/default.blade.php',
+                __DIR__.'/../resources/views/emails/default.blade.php',
                 $settings->get('reflar-prettymail.mailhtml')
             );
         }
@@ -43,7 +44,7 @@ class Mailer extends LaravelMailer
             'body'       => $body,
             'settings'   => $settings,
             'baseUrl'    => $app->url(),
-            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
+            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
             'link'       => $matches[0],
         ], $callback);
     }

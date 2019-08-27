@@ -23,8 +23,6 @@ use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Mail\Message;
 use s9e\TextFormatter\Bundles\Fatdown;
 
-
-
 class EmailConfirmationMailer
 {
     /**
@@ -45,16 +43,17 @@ class EmailConfirmationMailer
     protected $translator;
 
     /**
-     * Flarum assets directory, to find out where the css is
+     * Flarum assets directory, to find out where the css is.
+     *
      * @var string
      */
-    protected $assets_dir = (__DIR__ . '/../../../../../public/assets/');
+    protected $assets_dir = (__DIR__.'/../../../../../public/assets/');
 
     /**
      * @param \Flarum\Settings\SettingsRepositoryInterface $settings
-     * @param Mailer $mailer
-     * @param UrlGenerator $url
-     * @param Translator $translator
+     * @param Mailer                                       $mailer
+     * @param UrlGenerator                                 $url
+     * @param Translator                                   $translator
      */
     public function __construct(SettingsRepositoryInterface $settings, Mailer $mailer, UrlGenerator $url, Translator $translator)
     {
@@ -63,6 +62,7 @@ class EmailConfirmationMailer
         $this->url = $url;
         $this->translator = $translator;
     }
+
     /**
      * @param Dispatcher $events
      */
@@ -71,6 +71,7 @@ class EmailConfirmationMailer
         $events->listen(Registered::class, [$this, 'whenUserWasRegistered']);
         $events->listen(EmailChangeRequested::class, [$this, 'whenUserEmailChangeWasRequested']);
     }
+
     /**
      * @param \Flarum\User\Event\Registered $event
      */
@@ -93,13 +94,14 @@ class EmailConfirmationMailer
             'body'       => $body,
             'settings'   => $this->settings,
             'baseUrl'    => app()->url(),
-            'forumStyle' => file_get_contents($this->assets_dir . reset($file)),
+            'forumStyle' => file_get_contents($this->assets_dir.reset($file)),
             'link'       => $matches[0],
         ], function (Message $message) use ($user, $data) {
             $message->to($user->email);
-            $message->subject('[' . $data['{forum}'] . '] ' . $this->translator->trans('core.email.activate_account.subject'));
+            $message->subject('['.$data['{forum}'].'] '.$this->translator->trans('core.email.activate_account.subject'));
         });
     }
+
     /**
      * @param \Flarum\User\Event\EmailChangeRequested $event
      */
@@ -122,38 +124,44 @@ class EmailConfirmationMailer
             'body'       => $body,
             'settings'   => $this->settings,
             'baseUrl'    => app()->url(),
-            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
+            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
             'link'       => $matches[0],
         ], function (Message $message) use ($email, $data) {
             $message->to($email);
-            $message->subject('[' . $data['{forum}'] . '] ' . $this->translator->trans('core.email.confirm_email.subject'));
+            $message->subject('['.$data['{forum}'].'] '.$this->translator->trans('core.email.confirm_email.subject'));
         });
     }
+
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $email
+     *
      * @return EmailToken
      */
     protected function generateToken(User $user, $email)
     {
         $token = EmailToken::generate($email, $user->id);
         $token->save();
+
         return $token;
     }
+
     /**
      * Get the data that should be made available to email templates.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $email
+     *
      * @return array
      */
     protected function getEmailData(User $user, $email)
     {
         $token = $this->generateToken($user, $email);
+
         return [
             '{username}' => $user->display_name,
-            '{url}' => $this->url->to('forum')->route('confirmEmail', ['token' => $token->token]),
-            '{forum}' => $this->settings->get('forum_title')
+            '{url}'      => $this->url->to('forum')->route('confirmEmail', ['token' => $token->token]),
+            '{forum}'    => $this->settings->get('forum_title'),
         ];
     }
 
@@ -171,9 +179,9 @@ class EmailConfirmationMailer
             $matches
         );
 
-        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__ . '/../../../resources/views/emails/default.blade.php')) {
+        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../../../resources/views/emails/default.blade.php')) {
             file_put_contents(
-                __DIR__ . '/../../../resources/views/emails/default.blade.php',
+                __DIR__.'/../../../resources/views/emails/default.blade.php',
                 $this->settings->get('reflar-prettymail.mailhtml')
             );
         }

@@ -11,8 +11,8 @@
 
 namespace Flarum\Notification;
 
-use Flarum\User\User;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\User\User;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Mail\Message;
 
@@ -29,10 +29,11 @@ class NotificationMailer
     protected $settongs;
 
     /**
-     * Flarum assets directory, to find out where the css is
+     * Flarum assets directory, to find out where the css is.
+     *
      * @var string
      */
-    protected $assets_dir = (__DIR__ . '/../../../../../public/assets/');
+    protected $assets_dir = (__DIR__.'/../../../../../public/assets/');
 
     /**
      * @param Mailer $mailer
@@ -52,10 +53,10 @@ class NotificationMailer
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('reflar-prettymail.' . $blade[1]) !== file_get_contents(__DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php')) {
+        if ($this->settings->get('reflar-prettymail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
             file_put_contents(
-                __DIR__ . '/../../../resources/views/emails/' . $blade[1] . '.blade.php',
-                $this->settings->get('reflar-prettymail.' . $blade[1])
+                __DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
+                $this->settings->get('reflar-prettymail.'.$blade[1])
             );
         }
 
@@ -65,13 +66,13 @@ class NotificationMailer
         }
 
         $this->mailer->send(
-            'pretty-mail::emails.' . $blade[1],
+            'pretty-mail::emails.'.$blade[1],
             [
                 'user'       => $user,
                 'baseUrl'    => app()->url(),
                 'blueprint'  => $blueprint,
                 'settings'   => $this->settings,
-                'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir . reset($file)) : '',
+                'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
             ],
             function (Message $message) use ($blueprint, $user) {
                 $message->to($user->email, $user->username)
