@@ -49,7 +49,7 @@ class Mailer extends LaravelMailer
             'settings'   => $settings,
             'baseUrl'    => $app->url(),
             'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
-            'link'       => $matches[0],
+            'link'       => empty($matches) ? null : $matches[0],
         ], $callback);
     }
 }
