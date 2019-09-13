@@ -1,12 +1,8 @@
 <?php
 
 /*
- * This file is part of Flarum.
- *
- * (c) Toby Zerner <toby.zerner@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Original Copyright Flarum. Licensed under MIT License
+ * See license text at https://github.com/flarum/core/blob/master/LICENSE
  */
 
 namespace Flarum\Notification;
@@ -26,7 +22,7 @@ class NotificationMailer
     /**
      * @var SettingsRepositoryInterface
      */
-    protected $settongs;
+    protected $settings;
 
     /**
      * Flarum assets directory, to find out where the css is.
@@ -53,14 +49,14 @@ class NotificationMailer
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('reflar-prettymail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
+        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
             file_put_contents(
                 __DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
-                $this->settings->get('reflar-prettymail.'.$blade[1])
+                $this->settings->get('fof-pretty-mail.'.$blade[1])
             );
         }
 
-        $includeCSS = $this->settings->get('reflar-prettymail.includeCSS') == '1';
+        $includeCSS = $this->settings->get('fof-pretty-mail.includeCSS') == '1';
         if ($includeCSS) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }

@@ -1,5 +1,5 @@
 {
-    "name": "reflar/pretty-mail",
+    "name": "fof/pretty-mail",
     "description": "Make emails pretty",
     "keywords": [
         "extension",
@@ -11,24 +11,26 @@
     "authors": [
         {
             "name": "Charlie K",
-            "email": "issyrocks12@reflar.email",
-            "homepage": "https://reflar.io"
+            "email": "issyrocks12@reflar.email"
         }
     ],
     "support": {
-        "issues": "https://github.com/ReFlar/pretty-mail/issues",
-        "source": "https://github.com/ReFlar/pretty-mail"
+        "issues": "https://github.com/FriendsOfFlarum/pretty-mail/issues",
+        "source": "https://github.com/FriendsOfFlarum/pretty-mail"
     },
     "require": {
-        "flarum/core": "^0.1.0-beta.7"
+        "flarum/core": "^0.1.0-beta.8"
+    },
+    "replace": {
+        "reflar/pretty-mail": "*"
     },
     "extra": {
         "flarum-extension": {
-            "title": "ReFlar Pretty mail",
+            "title": "FoF Pretty Mail",
             "icon": {
                 "name": "fas fa-envelope-open",
-                "backgroundColor": "#263238",
-                "color": "#FFF"
+                "backgroundColor": "#e74c3c",
+                "color": "#fff"
             }
         }
     },
@@ -38,7 +40,7 @@
             "src/Overrides/Notification/NotificationMailer.php"
         ],
         "psr-4": {
-            "Reflar\\PrettyMail\\": "src/"
+            "FoF\\PrettyMail\\": "src/"
         }
     }
 }

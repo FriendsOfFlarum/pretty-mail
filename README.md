@@ -1,44 +1,37 @@
-# Pretty Mail by ReFlar
+# Pretty Mail by FriendsOfFlarum
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.com/ReFlar/pretty-mail/blob/master/LICENSE) [![Latest Stable Version](https://img.shields.io/packagist/v/reflar/pretty-mail.svg)](https://github.com/ReFlar/pretty-mail)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/fof/pretty-mail.svg)](https://packagist.org/packages/fof/pretty-mail) [![OpenCollective](https://img.shields.io/badge/opencollective-fof-blue.svg)](https://opencollective.com/fof/donate)
 
-A [Flarum](http://flarum.org) extension that allows you to make custom html templates for emails!
-
-
-### Usage
+A [Flarum](http://flarum.org) extension. Make custom HTML templates for emails!
 
 - Configure your custom email template from the extension settings
 - This supports all emails sent by Flarum, and 3rd party extensions
 
 ### Installation
 
-Install it with composer:
+Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
 
-```bash
-composer require reflar/pretty-mail
-```
-
-Next, run this command in your Flarum root dir:
-
-```bash
+```sh
+composer require fof/pretty-mail
 composer dump-autoload
 ```
 
-Then login and enable the extension.
+### Updating
+
+```sh
+composer update fof/pretty-mail
+```
 
 ### Important Note 
 
-Due to how Flarum handles certain emails, I had to utilize a "hack" to get it to work. This should be fixable in beta 8. Please report any issues you have to our Github.
-
-### To Do
-
-- Requests?
-
-### Issues
-
-- [Open an issue on Github](https://github.com/reflar/pretty-mail/issues) 
+Due to how Flarum handles certain emails, I had to utilize a "hack" to get it to work. Please report any issues you have to our Github.
 
 ### Links
 
-- [Github](https://github.com/reflar/pretty-mail)
-- [Packagist](https://packagist.org/packages/reflar/pretty-mail)
+[<img src="https://opencollective.com/fof/donate/button@2x.png?color=blue" height="25" />](https://opencollective.com/fof/donate)
+
+- [Packagist](https://packagist.org/packages/fof/pretty-mail)
+- [GitHub](https://github.com/packages/FriendsOfFlarum/pretty-mail)
+- [ReFlar's Pretty Mail](https://packagist.org/packages/reflar/pretty-mail)
+
+An extension by [FriendsOfFlarum](https://github.com/FriendsOfFlarum).

@@ -1,14 +1,8 @@
 <?php
 
-/**
- *  This file is part of reflar/gamification.
- *
- *  Copyright (c) ReFlar.
- *
- *  http://reflar.io
- *
- *  For the full copyright and license information, please view the license.md
- *  file that was distributed with this source code.
+/*
+ * Original Copyright Flarum. Licensed under MIT License
+ * See license text at https://github.com/flarum/core/blob/master/LICENSE
  */
 
 namespace Flarum\User;
@@ -88,7 +82,7 @@ class EmailConfirmationMailer
 
         $body = Fatdown::render(Fatdown::parse($body));
 
-        $includeCSS = $this->settings->get('reflar-prettymail.includeCSS') == '1';
+        $includeCSS = $this->settings->get('fof-pretty-mail.includeCSS') == '1';
         if ($includeCSS) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
@@ -118,7 +112,7 @@ class EmailConfirmationMailer
 
         $body = Fatdown::render(Fatdown::parse($body));
 
-        $includeCSS = $this->settings->get('reflar-prettymail.includeCSS') == '1';
+        $includeCSS = $this->settings->get('fof-pretty-mail.includeCSS') == '1';
         if ($includeCSS) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
@@ -182,10 +176,10 @@ class EmailConfirmationMailer
             $matches
         );
 
-        if ($this->settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../../../resources/views/emails/default.blade.php')) {
+        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../../../resources/views/emails/default.blade.php')) {
             file_put_contents(
                 __DIR__.'/../../../resources/views/emails/default.blade.php',
-                $this->settings->get('reflar-prettymail.mailhtml')
+                $this->settings->get('fof-pretty-mail.mailhtml')
             );
         }
 

@@ -1,9 +1,18 @@
 <?php
 
-namespace Reflar\PrettyMail\Providers;
+/*
+ * This file is part of fof/pretty-mail.
+ *
+ * Copyright (c) 2019 FriendsOfFlarum.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FoF\PrettyMail\Providers;
 
 use Flarum\Foundation\AbstractServiceProvider;
-use Reflar\PrettyMail\Mailer;
+use FoF\PrettyMail\Mailer;
 
 class MailerProvider extends AbstractServiceProvider
 {

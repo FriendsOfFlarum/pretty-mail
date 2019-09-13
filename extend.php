@@ -11,20 +11,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Reflar\PrettyMail;
+namespace FoF\PrettyMail;
 
-use Flarum\Extend;
+use Flarum\Extend as Native;
 use Flarum\Foundation\Application;
 
 return [
-    (new Extend\Frontend('admin'))
-        ->js(__DIR__.'/js/dist/admin.js')
-        ->css(__DIR__.'/resources/less/admin.less'),
-    new Extend\Locales(__DIR__.'/resources/locale'),
+    (new Native\Frontend('admin'))
+        ->js(__DIR__.'/js/dist/admin.js'),
+    new Native\Locales(__DIR__.'/resources/locale'),
     function (Application $app) {
         $app->register(Providers\MailerProvider::class);
-        /** @var Dispatcher $events */
-        $events = $app['events'];
-        $events->subscribe(Listeners\InjectSettings::class);
     },
 ];

@@ -1,6 +1,15 @@
 <?php
 
-namespace Reflar\PrettyMail;
+/*
+ * This file is part of fof/pretty-mail.
+ *
+ * Copyright (c) 2019 FriendsOfFlarum.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FoF\PrettyMail;
 
 use Illuminate\Mail\Mailer as LaravelMailer;
 use s9e\TextFormatter\Bundles\Fatdown;
@@ -32,14 +41,14 @@ class Mailer extends LaravelMailer
         $app = app();
         $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
 
-        if ($settings->get('reflar-prettymail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/emails/default.blade.php')) {
+        if ($settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/emails/default.blade.php')) {
             file_put_contents(
                 __DIR__.'/../resources/views/emails/default.blade.php',
-                $settings->get('reflar-prettymail.mailhtml')
+                $settings->get('fof-pretty-mail.mailhtml')
             );
         }
 
-        $includeCSS = $settings->get('reflar-prettymail.includeCSS') == '1';
+        $includeCSS = $settings->get('fof-pretty-mail.includeCSS') == '1';
         if ($includeCSS) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
