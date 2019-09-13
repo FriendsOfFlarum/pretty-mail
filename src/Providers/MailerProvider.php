@@ -17,12 +17,8 @@ class MailerProvider extends AbstractServiceProvider
 
             $mailer = new Mailer($view, $app['swift.mailer'], $app['events']);
 
-            $mailer->setContainer($app);
-            if ($app->bound('Psr\Log\LoggerInterface')) {
-                $mailer->setLogger($app->make('Psr\Log\LoggerInterface'));
-            }
             if ($app->bound('queue')) {
-                $mailer->setQueue($app['queue.connection']);
+                $mailer->setQueue($app['queue']);
             }
 
             $from = $app['config']['mail.from'];

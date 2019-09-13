@@ -2,17 +2,11 @@ import Alert from "flarum/components/Alert";
 import Button from "flarum/components/Button";
 import Page from 'flarum/components/Page';
 import saveSettings from "flarum/utils/saveSettings";
+import Switch from 'flarum/components/Switch';
 
-export default class settingsPage extends Page {
-
+export default class SettingsPage extends Page {
     init() {
-
-        this.fields = [
-            'mailhtml',
-            'newPost',
-            'postMentioned',
-            'userMentioned'
-        ];
+        this.fields = ['mailhtml', 'newPost', 'postMentioned', 'userMentioned', 'includeCSS'];
 
         this.values = {};
 
@@ -361,6 +355,21 @@ export default class settingsPage extends Page {
                                 value: this.values.postMentioned(),
                                 style: 'margin-bottom: 10px',
                                 oninput: m.withAttr('value', this.values.postMentioned)
+                            }),
+                            m('h1', app.translator.trans('reflar-prettymail.admin.css_settings.label')),
+                            m(
+                                'div',
+                                {
+                                    className: 'helpText',
+                                    style: 'margin: 10px 0 10px',
+                                },
+                                app.translator.trans('reflar-prettymail.admin.css_settings.help', { strong: <strong /> })
+                            ),
+                            Switch.component({
+                                className: 'Form-group',
+                                state: this.values.includeCSS() === '1',
+                                onchange: enabled => this.values.includeCSS(enabled? '1' : '0'),
+                                children: app.translator.trans('reflar-prettymail.admin.css_settings.switch_label'),
                             }),
                             Button.component({
                                 type: 'submit',

@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Schema\Builder;
 
 return [
-    'up' => function (Builder $schema, ConnectionInterface $db) {
-        $db->table('settings')->insert([
+    'up' => function (Builder $schema) {
+        $schema->getConnection()->table('settings')->insert([
             [
                 'key'   => 'reflar-prettymail.newPost',
                 'value' => file_get_contents(__DIR__.'/../resources/views/emails/newPost.blade.php'),

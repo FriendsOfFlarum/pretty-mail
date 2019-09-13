@@ -1,0 +1,26 @@
+reflar-prettymail:
+  forum:
+    settings:
+      unsubscribe: E-Mail-Benachrichtigungen von {forum} über Neuigkeiten und Updates erhalten
+  admin:
+    nav:
+      desc: Ihrer E-Mail-Templates Anpassen.
+    settings:
+      label: E-Mail-Templates
+      reset: Zurücksetzen
+      confirm: Sind Sie sicher, dass Sie das standart E-Mail-Template zurücksetzen wollen auf
+      default: Standart E-Mail-Template
+      newPost: Flarum-ext-subscriptions newPost E-Mail
+      userMentioned: Flarum-ext-mentions userMentioned E-Mail
+      postMentioned: Flarum-ext-mentions postMentioned E-Mail
+      notifications: Benachrichtigungen Templates
+      notificationHelp: 'Es wird empfohlen, für diese E-Mails "$forumStyle" zu verwenden, da sie BBCODE enthalten können. In diesen E-Mails ist auch "$user" verfügbar. Diese Variable enthält das gesamte Benutzermodell des zu versendenden Benutzer.'
+      help: '"$body" enthält den Inhalt des E-Mails, "$forumStyle" enthält das <strong>gesamte Forum CSS</strong> "$baseUrl" enthält Ihre Forums-URL, "$settings" ermöglicht Ihnen die Interaktion mit der SettingsRepositoryInterface und "$link" enthält den Link innerhalb des E-Mails. Siehe jedes Template, um zu erfahren, wie man die einzelnen Variablen verwendet.'
+    css_settings:
+      label: CSS-Einstellungen
+      help: Standardmäßig wird das gesamte CSS des Forums in den HTML-Code der E-Mails aufgenommen. Sie können dies deaktivieren, wenn Sie das CSS nicht in Ihren Vorlagen verwenden oder wenn Sie Probleme mit bestimmten E-Mail-Anbietern haben.
+      switch_label: forum-xxxxxxxx.css in Templates aufnehmen
+    unsubscribe_settings:
+      label: Abmeldung
+      help: Hier können Sie einen Abmeldelink zu allen E-Mails hinzufügen, die mit der Standardvorlage gesendet werden.
+      switch_label: Abmeldelink einfügen
