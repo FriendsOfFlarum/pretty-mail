@@ -32,6 +32,9 @@
                 "backgroundColor": "#e74c3c",
                 "color": "#fff"
             }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/11178-friendsofflarum-pretty-mail"
         }
     },
     "autoload": {
