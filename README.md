@@ -13,7 +13,6 @@ Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-mark
 
 ```sh
 composer require fof/pretty-mail
-composer dump-autoload
 ```
 
 ### Updating
