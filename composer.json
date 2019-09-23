@@ -38,9 +38,6 @@
         }
     },
     "autoload": {
-        "files": [
-            "src/Overrides/EmailConfirmationMailer.php"
-        ],
         "psr-4": {
             "FoF\\PrettyMail\\": "src/"
         }
