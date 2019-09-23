@@ -54,9 +54,9 @@ class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
             $matches
         );
 
-        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__ . '/../../../resources/views/emails/default.blade.php')) {
+        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../../../resources/views/emails/default.blade.php')) {
             file_put_contents(
-                __DIR__ . '/../../../resources/views/emails/default.blade.php',
+                __DIR__.'/../../../resources/views/emails/default.blade.php',
                 $this->settings->get('fof-pretty-mail.mailhtml')
             );
         }

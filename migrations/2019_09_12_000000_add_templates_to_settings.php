@@ -23,7 +23,7 @@ return [
 
                 if ($file === 'mailhtml') {
                     $file = 'default';
-                } else if ($file === 'includeCSS') {
+                } elseif ($file === 'includeCSS') {
                     continue;
                 }
 

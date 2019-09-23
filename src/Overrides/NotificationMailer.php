@@ -25,10 +25,10 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
      *
      * @var string
      */
-    protected $assets_dir = (__DIR__ . '/../../../../public/assets/');
+    protected $assets_dir = (__DIR__.'/../../../../public/assets/');
 
     /**
-     * @param Mailer $mailer
+     * @param Mailer                      $mailer
      * @param SettingsRepositoryInterface $settings
      */
     public function __construct(Mailer $mailer, SettingsRepositoryInterface $settings)
@@ -47,9 +47,9 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__ . '/../../resources/views/emails/' .$blade[1].'.blade.php')) {
+        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../resources/views/emails/'.$blade[1].'.blade.php')) {
             file_put_contents(
-                __DIR__ . '/../../../resources/views/emails/' .$blade[1].'.blade.php',
+                __DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
                 $this->settings->get('fof-pretty-mail.'.$blade[1])
             );
         }
