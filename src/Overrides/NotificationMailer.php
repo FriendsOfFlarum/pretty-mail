@@ -5,20 +5,16 @@
  * See license text at https://github.com/flarum/core/blob/master/LICENSE
  */
 
-namespace Flarum\Notification;
+namespace FoF\PrettyMail\Overrides;
 
+use Flarum\Notification\MailableInterface;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Mail\Message;
 
-class NotificationMailer
+class NotificationMailer extends \Flarum\Notification\NotificationMailer
 {
-    /**
-     * @var Mailer
-     */
-    protected $mailer;
-
     /**
      * @var SettingsRepositoryInterface
      */
@@ -29,14 +25,16 @@ class NotificationMailer
      *
      * @var string
      */
-    protected $assets_dir = (__DIR__.'/../../../../../public/assets/');
+    protected $assets_dir = (__DIR__ . '/../../../../public/assets/');
 
     /**
      * @param Mailer $mailer
+     * @param SettingsRepositoryInterface $settings
      */
     public function __construct(Mailer $mailer, SettingsRepositoryInterface $settings)
     {
-        $this->mailer = $mailer;
+        parent::__construct($mailer);
+
         $this->settings = $settings;
     }
 
@@ -49,9 +47,9 @@ class NotificationMailer
         $blade = [];
         preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
 
-        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php')) {
+        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__ . '/../../resources/views/emails/' .$blade[1].'.blade.php')) {
             file_put_contents(
-                __DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
+                __DIR__ . '/../../../resources/views/emails/' .$blade[1].'.blade.php',
                 $this->settings->get('fof-pretty-mail.'.$blade[1])
             );
         }

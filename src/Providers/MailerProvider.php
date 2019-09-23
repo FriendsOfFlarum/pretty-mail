@@ -12,14 +12,17 @@
 namespace FoF\PrettyMail\Providers;
 
 use Flarum\Foundation\AbstractServiceProvider;
+use Flarum\Foundation\Application;
+use Flarum\Notification\NotificationMailer;
 use FoF\PrettyMail\Mailer;
+use FoF\PrettyMail\Overrides;
 
 class MailerProvider extends AbstractServiceProvider
 {
     public function boot()
     {
         // Mostly copy-pasted from https://github.com/illuminate/mail/blob/v5.1.41/MailServiceProvider.php
-        $this->app->singleton('mailer', function ($app) {
+        $this->app->singleton('mailer', function (Application $app) {
             $view = $app['view'];
             $view->prependNamespace('flarum-subscriptions', realpath(__DIR__.'/../../resources/views'));
             $view->addNamespace('pretty-mail', realpath(__DIR__.'/../../resources/views'));
@@ -36,6 +39,10 @@ class MailerProvider extends AbstractServiceProvider
             }
 
             return $mailer;
+        });
+
+        $this->app->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
+            return app(Overrides\NotificationMailer::class);
         });
     }
 }
