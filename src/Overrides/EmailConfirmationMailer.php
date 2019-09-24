@@ -28,6 +28,13 @@ class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
 
+        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../../resources/views/emails/default.blade.php')) {
+            file_put_contents(
+                __DIR__.'/../../resources/views/emails/default.blade.php',
+                $this->settings->get('fof-pretty-mail.mailhtml')
+            );
+        }
+
         $this->mailer->send('pretty-mail::emails.default', [
             'body'       => $body,
             'settings'   => $this->settings,
