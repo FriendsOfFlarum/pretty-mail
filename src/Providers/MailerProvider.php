@@ -25,8 +25,6 @@ class MailerProvider extends AbstractServiceProvider
         // Mostly copy-pasted from https://github.com/illuminate/mail/blob/v5.1.41/MailServiceProvider.php
         $this->app->singleton('mailer', function (Application $app) {
             $view = $app['view'];
-            $view->prependNamespace('flarum-subscriptions', realpath(__DIR__.'/../../resources/views'));
-            $view->addNamespace('pretty-mail', realpath(__DIR__.'/../../resources/views'));
 
             $mailer = new Mailer($view, $app['swift.mailer'], $app['events']);
 

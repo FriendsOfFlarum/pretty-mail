@@ -38,27 +38,20 @@ class Mailer extends LaravelMailer
             $body = $text;
         }
 
-        $app = app();
-        $settings = $app->make('Flarum\Settings\SettingsRepositoryInterface');
+        $settings = app()->make('flarum.settings');
 
-        if ($settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../resources/views/emails/default.blade.php')) {
-            file_put_contents(
-                __DIR__.'/../resources/views/emails/default.blade.php',
-                $settings->get('fof-pretty-mail.mailhtml')
-            );
-        }
-
-        $includeCSS = $settings->get('fof-pretty-mail.includeCSS') == '1';
-        if ($includeCSS) {
+        if ((bool) (int) $settings->get('fof-pretty-mail.includeCSS')) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
 
-        return $this->send('pretty-mail::emails.default', [
+        $view = BladeCompiler::render($settings->get('fof-pretty-mail.mailhtml'), [
             'body'       => $body,
             'settings'   => $settings,
-            'baseUrl'    => $app->url(),
-            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
+            'baseUrl'    => app()->url(),
+            'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
             'link'       => empty($matches) ? null : $matches[0],
-        ], $callback);
+        ]);
+
+        $this->html($view, $callback);
     }
 }

@@ -27,11 +27,11 @@
                 background: #e8ecf3;
              }
         </style>
-@if ($forumStyle !== '')
-        <style>
-            {{ $forumStyle }}
-        </style>
-@endif
+        @if ($forumStyle !== '')
+            <style>
+                {!! $forumStyle !!}
+            </style>
+        @endif
     </head>
 </html>
 <body>

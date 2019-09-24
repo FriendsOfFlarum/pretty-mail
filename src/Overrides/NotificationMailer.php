@@ -10,11 +10,19 @@ namespace FoF\PrettyMail\Overrides;
 use Flarum\Notification\MailableInterface;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
+use FoF\PrettyMail\BladeCompiler;
 use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Mail\Message;
+use s9e\TextFormatter\Bundles\Fatdown;
 
 class NotificationMailer extends \Flarum\Notification\NotificationMailer
 {
+    /**
+     * @var View
+     */
+    protected $view;
+
     /**
      * @var SettingsRepositoryInterface
      */
@@ -27,14 +35,11 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
      */
     protected $assets_dir = (__DIR__.'/../../../../public/assets/');
 
-    /**
-     * @param Mailer                      $mailer
-     * @param SettingsRepositoryInterface $settings
-     */
-    public function __construct(Mailer $mailer, SettingsRepositoryInterface $settings)
+    public function __construct(Mailer $mailer, View $view, SettingsRepositoryInterface $settings)
     {
         parent::__construct($mailer);
 
+        $this->view = $view;
         $this->settings = $settings;
     }
 
@@ -44,30 +49,46 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
      */
     public function send(MailableInterface $blueprint, User $user)
     {
-        $blade = [];
-        preg_match("/\.(.*)$/", $blueprint->getEmailView()['text'], $blade);
+        $viewName = $blueprint->getEmailView()['text'] ?? null;
 
-        if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../resources/views/emails/'.$blade[1].'.blade.php')) {
-            file_put_contents(
-                __DIR__.'/../../resources/views/emails/'.$blade[1].'.blade.php',
-                $this->settings->get('fof-pretty-mail.'.$blade[1])
-            );
+        if (!$viewName) {
+            parent::send($blueprint, $user);
+            return;
         }
 
-        $includeCSS = $this->settings->get('fof-pretty-mail.includeCSS') == '1';
-        if ($includeCSS) {
+        if (starts_with($viewName, 'flarum')) {
+            $blade = [];
+            preg_match("/\.(.*)$/", $viewName, $blade);
+
+            $template = $this->settings->get("fof-pretty-mail.{$blade[1]}");
+        }
+
+        if ((bool) (int) $this->settings->get('fof-pretty-mail.includeCSS')) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
 
-        $this->mailer->send(
-            'pretty-mail::emails.'.$blade[1],
-            [
-                'user'       => $user,
-                'baseUrl'    => app()->url(),
-                'blueprint'  => $blueprint,
-                'settings'   => $this->settings,
-                'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
-            ],
+        $data = [
+            'user' => $user,
+            'blueprint'  => $blueprint,
+            'baseUrl' => app()->url(),
+            'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
+            'settings'   => $this->settings
+        ];
+
+        if (isset($template)) {
+            $view = BladeCompiler::render($template, $data);
+        } else {
+            $body = $this->view->make($viewName, compact('blueprint', 'user'))->render();
+
+            if (strip_tags($body) == $body) $body = Fatdown::render(Fatdown::parse($body));
+
+            $view = BladeCompiler::render($this->settings->get('fof-pretty-mail.mailhtml'), array_merge($data, [
+                'body' => $body,
+            ]));
+        }
+
+        $this->mailer->html(
+            $view,
             function (Message $message) use ($blueprint, $user) {
                 $message->to($user->email, $user->username)
                     ->subject($blueprint->getEmailSubject());

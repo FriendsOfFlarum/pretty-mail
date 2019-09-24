@@ -13,21 +13,17 @@ return [
         $keys = ['mailhtml', 'newPost', 'postMentioned', 'userMentioned', 'includeCSS'];
 
         foreach ($keys as $key) {
-            $value = $settings->get($full = "fof-pretty-mail.$key");
+            $value = $settings->get($full = "reflar-pretty-mail.$key");
 
-            if ($value !== null) {
+            if ($value) {
                 $settings->set("fof-pretty-mail.$key", $value);
                 $settings->delete($full);
             } else {
-                $file = $key;
-
-                if ($file === 'mailhtml') {
-                    $file = 'default';
-                } elseif ($file === 'includeCSS') {
+                if ($key === 'includeCSS') {
                     continue;
                 }
 
-                $settings->set("fof-pretty-mail.$key", file_get_contents(__DIR__."/../resources/views/emails/$file.blade.php"));
+                $settings->set("fof-pretty-mail.$key", file_get_contents(__DIR__."/../resources/defaults/$key.blade.php"));
             }
         }
     },

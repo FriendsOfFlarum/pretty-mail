@@ -8,11 +8,14 @@
 namespace FoF\PrettyMail\Overrides;
 
 use Flarum\User\Event\EmailChangeRequested;
+use FoF\PrettyMail\BladeCompiler;
 use Illuminate\Mail\Message;
 use s9e\TextFormatter\Bundles\Fatdown;
 
 class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
 {
+    protected $assets_dir = (__DIR__.'/../../../../public/assets/');
+
     public function handle(EmailChangeRequested $event)
     {
         $email = $event->email;
@@ -22,26 +25,19 @@ class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
         $matches = $this->prepareData($body);
         $body = Fatdown::render(Fatdown::parse($body));
 
-        $includeCSS = $this->settings->get('fof-pretty-mail.includeCSS') == '1';
-
-        if ($includeCSS) {
+        if ((bool) (int) $this->settings->get('fof-pretty-mail.includeCSS')) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));
         }
 
-        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../../resources/views/emails/default.blade.php')) {
-            file_put_contents(
-                __DIR__.'/../../resources/views/emails/default.blade.php',
-                $this->settings->get('fof-pretty-mail.mailhtml')
-            );
-        }
-
-        $this->mailer->send('pretty-mail::emails.default', [
+        $view = BladeCompiler::render($this->settings->get('fof-pretty-mail.mailhtml'), [
             'body'       => $body,
             'settings'   => $this->settings,
             'baseUrl'    => app()->url(),
-            'forumStyle' => $includeCSS ? file_get_contents($this->assets_dir.reset($file)) : '',
+            'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
             'link'       => $matches[0],
-        ], function (Message $message) use ($email, $data) {
+        ]);
+
+        $this->mailer->html($view, function (Message $message) use ($email, $data) {
             $message->to($email);
             $message->subject('['.$data['{forum}'].'] '.$this->translator->trans('core.email.confirm_email.subject'));
         });
@@ -60,13 +56,6 @@ class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
             $body,
             $matches
         );
-
-        if ($this->settings->get('fof-pretty-mail.mailhtml') !== file_get_contents(__DIR__.'/../../../resources/views/emails/default.blade.php')) {
-            file_put_contents(
-                __DIR__.'/../../../resources/views/emails/default.blade.php',
-                $this->settings->get('fof-pretty-mail.mailhtml')
-            );
-        }
 
         return $matches;
     }
