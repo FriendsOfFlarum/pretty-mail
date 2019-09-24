@@ -49,7 +49,7 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
 
         if ($this->settings->get('fof-pretty-mail.'.$blade[1]) !== file_get_contents(__DIR__.'/../../resources/views/emails/'.$blade[1].'.blade.php')) {
             file_put_contents(
-                __DIR__.'/../../../resources/views/emails/'.$blade[1].'.blade.php',
+                __DIR__.'/../../resources/views/emails/'.$blade[1].'.blade.php',
                 $this->settings->get('fof-pretty-mail.'.$blade[1])
             );
         }
