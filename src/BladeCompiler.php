@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FoF\PrettyMail;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -16,12 +15,18 @@ class BladeCompiler
         extract($data, EXTR_SKIP);
 
         try {
-            eval('?' . '>' . $php);
+            eval('?'.'>'.$php);
         } catch (\Exception $e) {
-            while (ob_get_level() > $obLevel) ob_end_clean();
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+
             throw $e;
         } catch (\Throwable $e) {
-            while (ob_get_level() > $obLevel) ob_end_clean();
+            while (ob_get_level() > $obLevel) {
+                ob_end_clean();
+            }
+
             throw new FatalThrowableError($e);
         }
 

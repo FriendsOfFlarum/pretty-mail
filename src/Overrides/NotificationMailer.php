@@ -53,6 +53,7 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
 
         if (!$viewName) {
             parent::send($blueprint, $user);
+
             return;
         }
 
@@ -68,11 +69,11 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
         }
 
         $data = [
-            'user' => $user,
+            'user'       => $user,
             'blueprint'  => $blueprint,
-            'baseUrl' => app()->url(),
+            'baseUrl'    => app()->url(),
             'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
-            'settings'   => $this->settings
+            'settings'   => $this->settings,
         ];
 
         if (isset($template)) {
@@ -80,7 +81,9 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
         } else {
             $body = $this->view->make($viewName, compact('blueprint', 'user'))->render();
 
-            if (strip_tags($body) == $body) $body = Fatdown::render(Fatdown::parse($body));
+            if (strip_tags($body) == $body) {
+                $body = Fatdown::render(Fatdown::parse($body));
+            }
 
             $view = BladeCompiler::render($this->settings->get('fof-pretty-mail.mailhtml'), array_merge($data, [
                 'body' => $body,
