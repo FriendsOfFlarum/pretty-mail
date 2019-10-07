@@ -14,6 +14,7 @@ namespace FoF\PrettyMail\Providers;
 use Flarum\Foundation\AbstractServiceProvider;
 use Flarum\Foundation\Application;
 use Flarum\Notification\NotificationMailer;
+use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\EmailConfirmationMailer;
 use FoF\PrettyMail\Mailer;
 use FoF\PrettyMail\Overrides;
@@ -32,10 +33,8 @@ class MailerProvider extends AbstractServiceProvider
                 $mailer->setQueue($app['queue']);
             }
 
-            $from = $app['config']['mail.from'];
-            if (is_array($from) && isset($from['address'])) {
-                $mailer->alwaysFrom($from['address'], $from['name']);
-            }
+            $settings = $app->make(SettingsRepositoryInterface::class);
+            $mailer->alwaysFrom($settings->get('mail_from'), $settings->get('forum_title'));
 
             return $mailer;
         });
