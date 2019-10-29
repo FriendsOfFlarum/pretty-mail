@@ -104,7 +104,7 @@ export const newPost = `<html>
         </div>
         <br/>
         <div class="post-content">
-            {!! $blueprint->post->contentHtml !!}
+            {!! $blueprint->post->formatContent() !!}
         </div>
         <br/>
         <div class="info">
@@ -173,7 +173,7 @@ export const userMentioned = `<html>
         </div>
         <br/>
         <div class="post-content">
-            {!! $blueprint->post->contentHtml !!}
+            {!! $blueprint->post->formatContent() !!}
         </div>
         <br/>
     </div>
@@ -237,7 +237,7 @@ export const postMentioned = `<html>
         </div>
         <br/>
         <div class="post-content">
-            {!! $blueprint->reply->contentHtml !!}
+            {!! $blueprint->reply->formatContent() !!}
         </div>
         <br/>
     </div>

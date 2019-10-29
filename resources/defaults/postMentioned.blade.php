@@ -53,7 +53,7 @@
         </div>
         <br/>
         <div class="post-content">
-            {!! $blueprint->reply->contentHtml !!}
+            {!! $blueprint->reply->formatContent() !!}
         </div>
         <br/>
     </div>
