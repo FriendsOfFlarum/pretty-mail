@@ -34,7 +34,7 @@ class EmailConfirmationMailer extends \Flarum\User\EmailConfirmationMailer
             'settings'   => $this->settings,
             'baseUrl'    => app()->url(),
             'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
-            'link'       => $matches[0],
+            'link'       => @$matches[0],
         ]);
 
         $this->mailer->html($view, function (Message $message) use ($email, $data) {
