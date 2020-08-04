@@ -15,7 +15,6 @@ use Flarum\Foundation\AbstractServiceProvider;
 use Flarum\Foundation\Application;
 use Flarum\Notification\NotificationMailer;
 use Flarum\Settings\SettingsRepositoryInterface;
-use Flarum\User\EmailConfirmationMailer;
 use FoF\PrettyMail\Mailer;
 use FoF\PrettyMail\Overrides;
 
@@ -41,10 +40,6 @@ class MailerProvider extends AbstractServiceProvider
 
         $this->app->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
             return app(Overrides\NotificationMailer::class);
-        });
-
-        $this->app->extend(EmailConfirmationMailer::class, function (EmailConfirmationMailer $mailer) {
-            return app(Overrides\EmailConfirmationMailer::class);
         });
     }
 }
