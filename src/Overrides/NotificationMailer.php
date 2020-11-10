@@ -77,7 +77,7 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
         $data = [
             'user'       => $user,
             'blueprint'  => $blueprint,
-            'baseUrl'    => $this->url->to('forum')->base(),
+            'baseUrl'    => $this->url->to('forum')->base(), // value is deprecated, to be replaced soley by $url. Provided as compatability for now.
             'url'        => $this->url,
             'forumStyle' => isset($file) ? file_get_contents($this->assets_dir.reset($file)) : '',
             'settings'   => $this->settings,

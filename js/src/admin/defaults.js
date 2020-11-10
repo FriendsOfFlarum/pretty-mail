@@ -37,7 +37,7 @@ export const mailto = `<html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
@@ -87,7 +87,7 @@ export const newPost = `<html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
@@ -97,7 +97,7 @@ export const newPost = `<html>
             <p>{!! $blueprint->post->user->display_name !!} made a post in a discussion you're following: {!! $blueprint->post->discussion->title !!}</p>
 
             <p>To view the new activity, check out the following link:</p>
-            <p>{!! $baseUrl !!}/d/{!! $blueprint->post->discussion_id !!}/{!! $blueprint->post->number !!}</p>
+            <p>{!! $url->to('forum')->route('discussion', ['id' => $blueprint->post->discussion_id, 'near' => $blueprint->post->number]) !!}</p>
 
             ---
 
@@ -157,7 +157,7 @@ export const userMentioned = `<html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
@@ -166,7 +166,7 @@ export const userMentioned = `<html>
 
             <p>{!! $blueprint->post->user->username !!} mentioned you in a post in {!! $blueprint->post->discussion->title !!}.</p>
 
-            <p>{!! $baseUrl !!}/d/{!! $blueprint->post->discussion_id !!}/{!! $blueprint->post->number !!}</p>
+            <p>{!! $url->to('forum')->route('discussion', ['id' => $blueprint->post->discussion_id, 'near' => $blueprint->post->number]) !!}</p>
 
             ---
 
@@ -221,7 +221,7 @@ export const postMentioned = `<html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
@@ -230,7 +230,7 @@ export const postMentioned = `<html>
 
             <p>{!! $blueprint->reply->user->username !!} replied to your post (#{!! $blueprint->post->number !!}) in {!! $blueprint->post->discussion->title !!}.</p>
 
-            <p>{!! app()->url() !!}/d/{!! $blueprint->reply->discussion_id !!}/{!! $blueprint->reply->number !!}</p>
+            <p>{!! $url->to('forum')->route('discussion', ['id' => $blueprint->reply->discussion_id, 'near' => $blueprint->reply->number]) !!}</p>
 
             ---
 
