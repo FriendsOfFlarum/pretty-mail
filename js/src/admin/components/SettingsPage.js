@@ -1,13 +1,15 @@
-import Alert from 'flarum/components/Alert';
 import Button from 'flarum/components/Button';
 import Page from 'flarum/components/Page';
 import saveSettings from 'flarum/utils/saveSettings';
 import Switch from 'flarum/components/Switch';
+import withAttr from 'flarum/utils/withAttr';
+import Stream from 'flarum/utils/Stream';
 
 import * as defaults from '../defaults';
 
 export default class SettingsPage extends Page {
-    init() {
+    oninit(vnode) {
+        super.oninit(vnode);
         this.fields = ['mailhtml', 'newPost', 'postMentioned', 'userMentioned', 'includeCSS'];
 
         this.values = {};
@@ -16,7 +18,7 @@ export default class SettingsPage extends Page {
 
         const settings = app.data.settings;
 
-        this.fields.forEach(key => (this.values[key] = m.prop(settings[this.addPrefix(key)])));
+        this.fields.forEach(key => (this.values[key] = Stream(settings[this.addPrefix(key)])));
     }
 
     view() {
@@ -40,18 +42,17 @@ export default class SettingsPage extends Page {
                                 type: 'button',
                                 style: 'margin-bottom: 10px',
                                 className: 'Button Button--primary',
-                                children: app.translator.trans('fof-pretty-mail.admin.settings.reset'),
                                 onclick: () => {
                                     if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' default?')) {
                                         this.values.mailhtml(defaults.mailto);
                                     }
                                 },
-                            }),
+                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.mailhtml(),
                                 style: 'margin: 10px 0 10px',
-                                oninput: m.withAttr('value', this.values.mailhtml),
+                                oninput: withAttr('value', this.values.mailhtml),
                             }),
                             m('h3', app.translator.trans('fof-pretty-mail.admin.settings.notifications')),
                             m(
@@ -68,18 +69,17 @@ export default class SettingsPage extends Page {
                                 type: 'button',
                                 style: 'margin: 10px 0 10px',
                                 className: 'Button Button--primary',
-                                children: app.translator.trans('fof-pretty-mail.admin.settings.reset'),
                                 onclick: () => {
                                     if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' newPost?')) {
                                         this.values.newPost(defaults.newPost);
                                     }
                                 },
-                            }),
+                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.newPost(),
                                 style: 'margin-bottom: 10px',
-                                oninput: m.withAttr('value', this.values.newPost),
+                                oninput: withAttr('value', this.values.newPost),
                             }),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.userMentioned')),
                             m('br'),
@@ -87,18 +87,17 @@ export default class SettingsPage extends Page {
                                 type: 'button',
                                 style: 'margin: 10px 0 10px',
                                 className: 'Button Button--primary',
-                                children: app.translator.trans('fof-pretty-mail.admin.settings.reset'),
                                 onclick: () => {
                                     if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' userMentioned?')) {
                                         this.values.userMentioned(defaults.userMentioned);
                                     }
                                 },
-                            }),
+                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.userMentioned(),
                                 style: 'margin-bottom: 10px',
-                                oninput: m.withAttr('value', this.values.userMentioned),
+                                oninput: withAttr('value', this.values.userMentioned),
                             }),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.postMentioned')),
                             m('br'),
@@ -106,18 +105,17 @@ export default class SettingsPage extends Page {
                                 type: 'button',
                                 style: 'margin: 10px 0 10px',
                                 className: 'Button Button--primary',
-                                children: app.translator.trans('fof-pretty-mail.admin.settings.reset'),
                                 onclick: () => {
                                     if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' postMentioned?')) {
                                         this.values.postMentioned(defaults.postMentioned);
                                     }
                                 },
-                            }),
+                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.postMentioned(),
                                 style: 'margin-bottom: 10px',
-                                oninput: m.withAttr('value', this.values.postMentioned),
+                                oninput: withAttr('value', this.values.postMentioned),
                             }),
                             m('h1', app.translator.trans('fof-pretty-mail.admin.css_settings.label')),
                             m(
@@ -132,15 +130,13 @@ export default class SettingsPage extends Page {
                                 className: 'Form-group',
                                 state: this.values.includeCSS() === '1',
                                 onchange: enabled => this.values.includeCSS(enabled ? '1' : '0'),
-                                children: app.translator.trans('fof-pretty-mail.admin.css_settings.switch_label'),
-                            }),
+                            }, app.translator.trans('fof-pretty-mail.admin.css_settings.switch_label')),
                             Button.component({
                                 type: 'submit',
                                 className: 'Button Button--primary',
-                                children: app.translator.trans('core.admin.settings.submit_button'),
                                 loading: this.loading,
                                 disabled: !this.changed(),
-                            }),
+                            }, app.translator.trans('core.admin.settings.submit_button')),
                         ]),
                     ]),
                 ]),
@@ -166,20 +162,13 @@ export default class SettingsPage extends Page {
 
         this.loading = true;
 
-        app.alerts.dismiss(this.successAlert);
-
         const settings = {};
 
         this.fields.forEach(key => (settings[this.addPrefix(key)] = this.values[key]()));
 
         saveSettings(settings).then(() => {
             this.loading = false;
-            app.alerts.show(
-                (this.successAlert = new Alert({
-                    type: 'success',
-                    children: app.translator.trans('core.admin.basics.saved_message'),
-                }))
-            );
+            app.alerts.show({ type: 'success' }, app.translator.trans('core.admin.basics.saved_message'));
         });
     }
 
