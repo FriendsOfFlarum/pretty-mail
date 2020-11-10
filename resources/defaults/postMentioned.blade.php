@@ -27,17 +27,15 @@
                 background: #e8ecf3;
             }
         </style>
-@if ($forumStyle !== '')
         <style>
             {!! $forumStyle !!}
         </style>
-@endif
     </head>
 </html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
@@ -46,7 +44,7 @@
 
             <p>{!! $blueprint->reply->user->username !!} replied to your post (#{!! $blueprint->post->number !!}) in {!! $blueprint->post->discussion->title !!}.</p>
 
-            <p>{!! app()->url() !!}/d/{!! $blueprint->reply->discussion_id !!}/{!! $blueprint->reply->number !!}</p>
+            <p>{!! $url->to('forum')->route('discussion', ['id' => $blueprint->reply->discussion_id, 'near' => $blueprint->reply->number]) !!}</p>
 
             ---
 

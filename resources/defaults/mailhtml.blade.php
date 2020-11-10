@@ -28,16 +28,16 @@
              }
         </style>
         @if ($forumStyle !== '')
-            <style>
-                {!! $forumStyle !!}
-            </style>
+        <style>
+            {!! $forumStyle !!}
+        </style>
         @endif
     </head>
 </html>
 <body>
     <div class="header">
         <div class="content">
-            <a href="{{ $baseUrl }}">{{ $settings->get('forum_title') }}</a>
+            <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
         </div>
     </div>
     <div class="content">
