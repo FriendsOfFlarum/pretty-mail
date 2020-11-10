@@ -14,10 +14,10 @@ use Flarum\User\User;
 use FoF\PrettyMail\BladeCompiler;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\View\Factory as View;
-use Illuminate\Support\Str;
 use Illuminate\Mail\Message;
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Support\Str;
 use s9e\TextFormatter\Bundles\Fatdown;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class NotificationMailer extends \Flarum\Notification\NotificationMailer
 {

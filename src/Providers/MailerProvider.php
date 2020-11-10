@@ -12,7 +12,6 @@
 namespace FoF\PrettyMail\Providers;
 
 use Flarum\Foundation\AbstractServiceProvider;
-use Flarum\Foundation\Application;
 use Flarum\Notification\NotificationMailer;
 use Flarum\Settings\SettingsRepositoryInterface;
 use FoF\PrettyMail\Mailer;
