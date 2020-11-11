@@ -31,8 +31,7 @@
             {!! $forumStyle !!}
         </style>
     </head>
-</html>
-<body>
+    <body>
     <div class="header">
         <div class="content">
             <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
@@ -42,10 +41,7 @@
         <div class="info">
             <p>Hey {!! $user->display_name !!}!</p>
 
-            <p>{!! $blueprint->post->user->display_name !!} made a post in a discussion you're following: {!! $blueprint->post->discussion->title !!}</p>
-
-            <p>To view the new activity, check out the following link:</p>
-            <p>{!! $url->to('forum')->route('discussion', ['id' => $blueprint->post->discussion_id, 'near' => $blueprint->post->number]) !!}</p>
+            <p><a href="{{ $url->to('forum')->route('user', ['username' => $blueprint->post->user->username]) }}">{!! $blueprint->post->user->username !!}</a> made a post in a discussion you're following: <a href="{{ $url->to('forum')->route('discussion', ['id' => $blueprint->post->discussion_id, 'near' => $blueprint->post->number]) }}">{!! $blueprint->post->discussion->title !!}</a></p>
 
             ---
 
@@ -63,7 +59,8 @@
     </div>
     <div class="footer">
         <div class="content">
-            <p>Sent from {{ $settings->get('forum_title') }} using the Pretty Mail extension</p>
+            <p>Sent from {{ $settings->get('forum_title') }} using FoF Pretty Mail</p>
         </div>
     </div>
-</body>
+    </body>
+</html>

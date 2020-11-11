@@ -33,8 +33,7 @@
         </style>
         @endif
     </head>
-</html>
-<body>
+    <body>
     <div class="header">
         <div class="content">
             <a href="{{ $url->to('forum')->base() }}">{{ $settings->get('forum_title') }}</a>
@@ -45,7 +44,8 @@
     </div>
     <div class="footer">
         <div class="content">
-            <p>Sent from {{ $settings->get('forum_title') }} using the Pretty Mail extension</p>
+            <p>Sent from {{ $settings->get('forum_title') }} using FoF Pretty Mail</p>
         </div>
     </div>
-</body>
+    </body>
+</html>
