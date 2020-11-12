@@ -199,10 +199,10 @@ export default class SettingsPage extends Page {
     }
 
     checkContent(key) {
-        if (this.values[key]().includes('$url')) {
+        if (this.values[key]().includes('$baseUrl')) {
             app.alerts.show({ type: 'warning' }, key + ": The use of $baseUrl is deprecated. Use $url->to('forum')->base() instead.");
         }
-        if (this.values[key]().includes('$url')) {
+        if (this.values[key]().includes('app()->url()')) {
             app.alerts.show({ type: 'error' }, key + ": app()->url() has been replaced. Use $url->to('forum')->base() instead.");
         }
     }
