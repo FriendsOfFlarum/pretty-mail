@@ -38,16 +38,19 @@ export default class SettingsPage extends Page {
                             ),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.default')),
                             m('br'),
-                            Button.component({
-                                type: 'button',
-                                style: 'margin-bottom: 10px',
-                                className: 'Button Button--primary',
-                                onclick: () => {
-                                    if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' default?')) {
-                                        this.values.mailhtml(defaults.mailto);
-                                    }
+                            Button.component(
+                                {
+                                    type: 'button',
+                                    style: 'margin-bottom: 10px',
+                                    className: 'Button Button--primary',
+                                    onclick: () => {
+                                        if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' default?')) {
+                                            this.values.mailhtml(defaults.mailto);
+                                        }
+                                    },
                                 },
-                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
+                                app.translator.trans('fof-pretty-mail.admin.settings.reset')
+                            ),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.mailhtml(),
@@ -65,16 +68,19 @@ export default class SettingsPage extends Page {
                             ),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.newPost')),
                             m('br'),
-                            Button.component({
-                                type: 'button',
-                                style: 'margin: 10px 0 10px',
-                                className: 'Button Button--primary',
-                                onclick: () => {
-                                    if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' newPost?')) {
-                                        this.values.newPost(defaults.newPost);
-                                    }
+                            Button.component(
+                                {
+                                    type: 'button',
+                                    style: 'margin: 10px 0 10px',
+                                    className: 'Button Button--primary',
+                                    onclick: () => {
+                                        if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' newPost?')) {
+                                            this.values.newPost(defaults.newPost);
+                                        }
+                                    },
                                 },
-                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
+                                app.translator.trans('fof-pretty-mail.admin.settings.reset')
+                            ),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.newPost(),
@@ -83,16 +89,19 @@ export default class SettingsPage extends Page {
                             }),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.userMentioned')),
                             m('br'),
-                            Button.component({
-                                type: 'button',
-                                style: 'margin: 10px 0 10px',
-                                className: 'Button Button--primary',
-                                onclick: () => {
-                                    if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' userMentioned?')) {
-                                        this.values.userMentioned(defaults.userMentioned);
-                                    }
+                            Button.component(
+                                {
+                                    type: 'button',
+                                    style: 'margin: 10px 0 10px',
+                                    className: 'Button Button--primary',
+                                    onclick: () => {
+                                        if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' userMentioned?')) {
+                                            this.values.userMentioned(defaults.userMentioned);
+                                        }
+                                    },
                                 },
-                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
+                                app.translator.trans('fof-pretty-mail.admin.settings.reset')
+                            ),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.userMentioned(),
@@ -101,16 +110,19 @@ export default class SettingsPage extends Page {
                             }),
                             m('label', app.translator.trans('fof-pretty-mail.admin.settings.postMentioned')),
                             m('br'),
-                            Button.component({
-                                type: 'button',
-                                style: 'margin: 10px 0 10px',
-                                className: 'Button Button--primary',
-                                onclick: () => {
-                                    if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' postMentioned?')) {
-                                        this.values.postMentioned(defaults.postMentioned);
-                                    }
+                            Button.component(
+                                {
+                                    type: 'button',
+                                    style: 'margin: 10px 0 10px',
+                                    className: 'Button Button--primary',
+                                    onclick: () => {
+                                        if (confirm(app.translator.trans('fof-pretty-mail.admin.settings.confirm') + ' postMentioned?')) {
+                                            this.values.postMentioned(defaults.postMentioned);
+                                        }
+                                    },
                                 },
-                            }, app.translator.trans('fof-pretty-mail.admin.settings.reset')),
+                                app.translator.trans('fof-pretty-mail.admin.settings.reset')
+                            ),
                             m('textarea.FormControl', {
                                 rows: '15',
                                 value: this.values.postMentioned(),
@@ -126,17 +138,23 @@ export default class SettingsPage extends Page {
                                 },
                                 app.translator.trans('fof-pretty-mail.admin.css_settings.help', { strong: <strong /> })
                             ),
-                            Switch.component({
-                                className: 'Form-group',
-                                state: this.values.includeCSS() === '1',
-                                onchange: enabled => this.values.includeCSS(enabled ? '1' : '0'),
-                            }, app.translator.trans('fof-pretty-mail.admin.css_settings.switch_label')),
-                            Button.component({
-                                type: 'submit',
-                                className: 'Button Button--primary',
-                                loading: this.loading,
-                                disabled: !this.changed(),
-                            }, app.translator.trans('core.admin.settings.submit_button')),
+                            Switch.component(
+                                {
+                                    className: 'Form-group',
+                                    state: this.values.includeCSS() === '1',
+                                    onchange: enabled => this.values.includeCSS(enabled ? '1' : '0'),
+                                },
+                                app.translator.trans('fof-pretty-mail.admin.css_settings.switch_label')
+                            ),
+                            Button.component(
+                                {
+                                    type: 'submit',
+                                    className: 'Button Button--primary',
+                                    loading: this.loading,
+                                    disabled: !this.changed(),
+                                },
+                                app.translator.trans('core.admin.settings.submit_button')
+                            ),
                         ]),
                     ]),
                 ]),
@@ -157,6 +175,7 @@ export default class SettingsPage extends Page {
      */
     onsubmit(e) {
         e.preventDefault();
+        this.fields.forEach(key => this.checkContent(key));
 
         if (this.loading) return;
 
@@ -177,5 +196,14 @@ export default class SettingsPage extends Page {
      */
     addPrefix(key) {
         return this.settingsPrefix + '.' + key;
+    }
+
+    checkContent(key) {
+        if (this.values[key]().includes('$url')) {
+            app.alerts.show({ type: 'warning' }, key + ": The use of $baseUrl is deprecated. Use $url->to('forum')->base() instead.");
+        }
+        if (this.values[key]().includes('$url')) {
+            app.alerts.show({ type: 'error' }, key + ": app()->url() has been replaced. Use $url->to('forum')->base() instead.");
+        }
     }
 }

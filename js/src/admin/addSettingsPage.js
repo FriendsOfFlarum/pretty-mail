@@ -11,11 +11,14 @@ export default function() {
     extend(AdminNav.prototype, 'items', items => {
         items.add(
             'fof-pretty-mail',
-            AdminLinkButton.component({
-                href: app.route('fof-pretty-mail'),
-                icon: 'fas fa-envelope-open',
-                description: app.translator.trans('fof-pretty-mail.admin.nav.desc'),
-            }, 'Pretty Mail')
+            AdminLinkButton.component(
+                {
+                    href: app.route('fof-pretty-mail'),
+                    icon: 'fas fa-envelope-open',
+                    description: app.translator.trans('fof-pretty-mail.admin.nav.desc'),
+                },
+                'Pretty Mail'
+            )
         );
     });
 }
