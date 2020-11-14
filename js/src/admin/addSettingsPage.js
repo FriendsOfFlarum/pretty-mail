@@ -4,19 +4,21 @@ import AdminLinkButton from 'flarum/components/AdminLinkButton';
 import SettingsPage from './components/SettingsPage';
 
 export default function() {
-    app.routes['fof-pretty-mail'] = { path: '/fof/pretty-mail', component: SettingsPage.component() };
+    app.routes['fof-pretty-mail'] = { path: '/fof/pretty-mail', component: SettingsPage };
 
-    app.extensionSettings['fof-pretty-mail'] = () => m.route(app.route('fof-pretty-mail'));
+    app.extensionSettings['fof-pretty-mail'] = () => m.route.get(app.route('fof-pretty-mail'));
 
     extend(AdminNav.prototype, 'items', items => {
         items.add(
             'fof-pretty-mail',
-            AdminLinkButton.component({
-                href: app.route('fof-pretty-mail'),
-                icon: 'fas fa-envelope-open',
-                children: 'Pretty Mail',
-                description: app.translator.trans('fof-pretty-mail.admin.nav.desc'),
-            })
+            AdminLinkButton.component(
+                {
+                    href: app.route('fof-pretty-mail'),
+                    icon: 'fas fa-envelope-open',
+                    description: app.translator.trans('fof-pretty-mail.admin.nav.desc'),
+                },
+                'Pretty Mail'
+            )
         );
     });
 }
