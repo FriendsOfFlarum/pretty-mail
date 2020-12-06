@@ -12,7 +12,7 @@ export default class SettingsPage extends Page {
         super.oninit(vnode);
         this.fields = ['mailhtml', 'newPost', 'postMentioned', 'userMentioned', 'includeCSS'];
 
-        this.values = {};
+        this.values = [];
 
         this.settingsPrefix = 'fof-pretty-mail';
 

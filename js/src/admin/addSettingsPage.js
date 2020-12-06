@@ -6,7 +6,7 @@ import SettingsPage from './components/SettingsPage';
 export default function() {
     app.routes['fof-pretty-mail'] = { path: '/fof/pretty-mail', component: SettingsPage };
 
-    app.extensionSettings['fof-pretty-mail'] = () => m.route.get(app.route('fof-pretty-mail'));
+    app.extensionSettings['fof-pretty-mail'] = () => m.route.set(app.route('fof-pretty-mail'));
 
     extend(AdminNav.prototype, 'items', items => {
         items.add(
