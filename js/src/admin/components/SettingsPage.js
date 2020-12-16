@@ -1,5 +1,5 @@
 import Button from 'flarum/components/Button';
-import Page from 'flarum/components/Page';
+import ExtensionPage from 'flarum/components/ExtensionPage';
 import saveSettings from 'flarum/utils/saveSettings';
 import Switch from 'flarum/components/Switch';
 import withAttr from 'flarum/utils/withAttr';
@@ -7,7 +7,7 @@ import Stream from 'flarum/utils/Stream';
 
 import * as defaults from '../defaults';
 
-export default class SettingsPage extends Page {
+export default class SettingsPage extends ExtensionPage {
     oninit(vnode) {
         super.oninit(vnode);
         this.fields = ['mailhtml', 'newPost', 'postMentioned', 'userMentioned', 'includeCSS'];
@@ -21,7 +21,7 @@ export default class SettingsPage extends Page {
         this.fields.forEach(key => (this.values[key] = Stream(settings[this.addPrefix(key)])));
     }
 
-    view() {
+    content() {
         return [
             m('div', { style: 'padding-bottom: 20px', className: 'SettingsPage' }, [
                 m('div', { className: 'container' }, [

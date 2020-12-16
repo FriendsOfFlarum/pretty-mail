@@ -1,7 +1,6 @@
 import app from 'flarum/app';
-import addSettingsPage from './addSettingsPage';
+import SettingsPage from './components/SettingsPage';
 
 app.initializers.add('fof-pretty-mail', () => {
-    // Add a settings pane for the extension
-    addSettingsPage();
+    app.extensionData.for('fof-pretty-mail').registerPage(SettingsPage);
 });
