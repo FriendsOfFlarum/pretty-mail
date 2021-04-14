@@ -28,14 +28,14 @@ class MailerProvider extends AbstractServiceProvider
             return new MailManager($container);
         });
 
-        $this->app->bind('mailer', function(Container $container) {
+        $this->app->bind('mailer', function (Container $container) {
             $mailer = $container->make('mail.manager')->mailer();
             $settings = app(SettingsRepositoryInterface::class);
             $mailer->alwaysFrom($settings->get('mail_from'), $settings->get('forum_title'));
 
             return $mailer;
         });
-            
+
         $this->app->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
             return app(Overrides\NotificationMailer::class);
         });
