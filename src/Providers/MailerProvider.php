@@ -3,10 +3,11 @@
 /*
  * This file is part of fof/pretty-mail.
  *
- * Copyright (c) 2019 FriendsOfFlarum.
+ * Copyright (c) FriendsOfFlarum.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
  */
 
 namespace FoF\PrettyMail\Providers;
@@ -26,7 +27,7 @@ class MailerProvider extends AbstractServiceProvider
         $this->app->singleton('mailer', function (Container $container) {
             $view = $container['view'];
 
-            $mailer = new Mailer($view, $container['swift.mailer'], $container['events']);
+            $mailer = new Mailer('mailer', $view, $container['swift.mailer'], $container['events']);
 
             if ($container->bound('queue')) {
                 $mailer->setQueue($container['queue']);
