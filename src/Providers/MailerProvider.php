@@ -17,26 +17,24 @@ use Flarum\Settings\SettingsRepositoryInterface;
 use FoF\PrettyMail\Mailer;
 use FoF\PrettyMail\Overrides;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Mail\MailManager;
 
 class MailerProvider extends AbstractServiceProvider
 {
     public function boot()
     {
-        // Mostly copy-pasted from https://github.com/illuminate/mail/blob/v5.1.41/MailServiceProvider.php
-        $this->app->singleton('mailer', function (Container $container) {
-            $view = $container['view'];
+        // Mostly copy-pasted from https://github.com/illuminate/mail/blob/v8.x/MailServiceProvider.php
+        $this->app->singleton('mail.manager', function (Container $container) {
+            return new MailManager($container);
+        });
 
-            $mailer = new Mailer($view, $container['swift.mailer'], $container['events']);
-
-            if ($container->bound('queue')) {
-                $mailer->setQueue($container['queue']);
-            }
-
+        $this->app->bind('mailer',function(Container $container) {
+            $mailer = $container->make('mail.manager')->mailer();
             $settings = app(SettingsRepositoryInterface::class);
             $mailer->alwaysFrom($settings->get('mail_from'), $settings->get('forum_title'));
-
             return $mailer;
         });
+            
 
         $this->app->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
             return app(Overrides\NotificationMailer::class);
