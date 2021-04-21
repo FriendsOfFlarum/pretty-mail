@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of fof/pretty-mail.
+ *
+ * Copyright (c) FriendsOfFlarum.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
+
 namespace FoF\PrettyMail;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
