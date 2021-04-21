@@ -13,7 +13,6 @@
 namespace FoF\PrettyMail;
 
 use Exception;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class BladeCompiler
 {
