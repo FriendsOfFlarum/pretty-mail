@@ -12,13 +12,14 @@
 
 namespace FoF\PrettyMail;
 
+use Exception;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class BladeCompiler
 {
     public static function render($string, $data)
     {
-        $php = app('blade.compiler')->compileString($string);
+        $php = resolve('blade.compiler')->compileString($string);
 
         $obLevel = ob_get_level();
         ob_start();
@@ -37,7 +38,7 @@ class BladeCompiler
                 ob_end_clean();
             }
 
-            throw new FatalThrowableError($e);
+            throw new Exception($e);
         }
 
         return ob_get_clean();

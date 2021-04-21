@@ -44,12 +44,12 @@ class Mailer extends LaravelMailer
         /**
          * @var SettingsRepositoryInterface
          */
-        $settings = app(SettingsRepositoryInterface::class);
+        $settings = resolve(SettingsRepositoryInterface::class);
 
         /**
          * @var UrlGenerator
          */
-        $url = app(UrlGenerator::class);
+        $url = resolve(UrlGenerator::class);
 
         if ((bool) (int) $settings->get('fof-pretty-mail.includeCSS')) {
             $file = preg_grep('~^forum-.*\.css$~', scandir($this->assets_dir));

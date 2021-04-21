@@ -22,7 +22,7 @@ use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Str;
 use s9e\TextFormatter\Bundles\Fatdown;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NotificationMailer extends \Flarum\Notification\NotificationMailer
 {

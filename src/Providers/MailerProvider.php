@@ -24,7 +24,7 @@ class MailerProvider extends AbstractServiceProvider
     public function boot()
     {
         // Mostly copy-pasted from https://github.com/illuminate/mail/blob/v5.1.41/MailServiceProvider.php
-        $this->app->singleton('mailer', function (Container $container) {
+        $this->container->singleton('mailer', function (Container $container) {
             $view = $container['view'];
 
             $mailer = new Mailer('mailer', $view, $container['swift.mailer'], $container['events']);
@@ -33,14 +33,14 @@ class MailerProvider extends AbstractServiceProvider
                 $mailer->setQueue($container['queue']);
             }
 
-            $settings = app(SettingsRepositoryInterface::class);
+            $settings = resolve(SettingsRepositoryInterface::class);
             $mailer->alwaysFrom($settings->get('mail_from'), $settings->get('forum_title'));
 
             return $mailer;
         });
 
-        $this->app->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
-            return app(Overrides\NotificationMailer::class);
+        $this->container->extend(NotificationMailer::class, function (NotificationMailer $mailer) {
+            return resolve(Overrides\NotificationMailer::class);
         });
     }
 }

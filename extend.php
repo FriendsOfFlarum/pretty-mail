@@ -13,13 +13,14 @@
 namespace FoF\PrettyMail;
 
 use Flarum\Extend;
-use Flarum\Foundation\Application;
+use FoF\PrettyMail\Providers\MailerProvider;
 
 return [
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js'),
+
     new Extend\Locales(__DIR__.'/resources/locale'),
-    function (Application $app) {
-        $app->register(Providers\MailerProvider::class);
-    },
+
+    (new Extend\ServiceProvider)
+        ->register(MailerProvider::class)
 ];
