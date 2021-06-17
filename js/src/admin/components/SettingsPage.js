@@ -18,7 +18,7 @@ export default class SettingsPage extends ExtensionPage {
 
         const settings = app.data.settings;
 
-        this.fields.forEach(key => (this.values[key] = Stream(settings[this.addPrefix(key)])));
+        this.fields.forEach((key) => (this.values[key] = Stream(settings[this.addPrefix(key)])));
     }
 
     content() {
@@ -142,7 +142,7 @@ export default class SettingsPage extends ExtensionPage {
                                 {
                                     className: 'Form-group',
                                     state: this.values.includeCSS() === '1',
-                                    onchange: enabled => this.values.includeCSS(enabled ? '1' : '0'),
+                                    onchange: (enabled) => this.values.includeCSS(enabled ? '1' : '0'),
                                 },
                                 app.translator.trans('fof-pretty-mail.admin.css_settings.switch_label')
                             ),
@@ -166,7 +166,7 @@ export default class SettingsPage extends ExtensionPage {
      * @returns {boolean}
      */
     changed() {
-        var fieldsCheck = this.fields.some(key => this.values[key]() !== app.data.settings[this.addPrefix(key)]);
+        var fieldsCheck = this.fields.some((key) => this.values[key]() !== app.data.settings[this.addPrefix(key)]);
         return fieldsCheck;
     }
 
@@ -182,7 +182,7 @@ export default class SettingsPage extends ExtensionPage {
 
         const settings = {};
 
-        this.fields.forEach(key => (settings[this.addPrefix(key)] = this.values[key]()));
+        this.fields.forEach((key) => (settings[this.addPrefix(key)] = this.values[key]()));
 
         saveSettings(settings).then(() => {
             this.loading = false;
