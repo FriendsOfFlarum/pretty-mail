@@ -34,7 +34,7 @@ class Mailer extends LaravelMailer
     {
         parent::__construct($name, $views, $swift, $events);
 
-        $this->assets_dir = resolve(Paths::class)->public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
+        $this->assets_dir = resolve(Paths::class)->public.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR;
     }
 
     public function raw($text, $callback, $use_fatdown = true)

@@ -54,7 +54,7 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
         $this->settings = $settings;
         $this->url = $url;
 
-        $this->assets_dir = $paths->public . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
+        $this->assets_dir = $paths->public.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR;
     }
 
     /**
