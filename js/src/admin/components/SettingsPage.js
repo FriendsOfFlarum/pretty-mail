@@ -1,3 +1,4 @@
+import app from 'flarum/admin/app';
 import Button from 'flarum/components/Button';
 import ExtensionPage from 'flarum/components/ExtensionPage';
 import saveSettings from 'flarum/utils/saveSettings';
