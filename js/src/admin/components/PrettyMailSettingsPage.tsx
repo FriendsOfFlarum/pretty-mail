@@ -26,7 +26,6 @@ export default class PrettyMailSettingsPage extends ExtensionPage {
             <p className="helpText">{app.translator.trans('fof-pretty-mail.admin.settings.template_help')}</p>
             {this.buildSettingComponent({
               label: app.translator.trans('fof-pretty-mail.admin.settings.default'),
-              help: app.translator.trans('fof-pretty-mail.admin.settings.default_help'),
               type: 'textarea',
               setting: 'fof-pretty-mail.mailhtml',
               rows: 10,
@@ -85,7 +84,6 @@ export default class PrettyMailSettingsPage extends ExtensionPage {
       <div>
         {this.buildSettingComponent({
           label: app.translator.trans('fof-pretty-mail.admin.settings.userMentioned'),
-          help: app.translator.trans('fof-pretty-mail.admin.settings.userMentioned_help'),
           type: 'textarea',
           setting: 'fof-pretty-mail.userMentioned',
           rows: 10,
@@ -108,7 +106,6 @@ export default class PrettyMailSettingsPage extends ExtensionPage {
       <div>
         {this.buildSettingComponent({
           label: app.translator.trans('fof-pretty-mail.admin.settings.postMentioned'),
-          help: app.translator.trans('fof-pretty-mail.admin.settings.postMentioned_help'),
           type: 'textarea',
           setting: 'fof-pretty-mail.postMentioned',
           rows: 10,
@@ -131,7 +128,6 @@ export default class PrettyMailSettingsPage extends ExtensionPage {
       <div>
         {this.buildSettingComponent({
           label: app.translator.trans('fof-pretty-mail.admin.settings.newPost'),
-          help: app.translator.trans('fof-pretty-mail.admin.settings.newPost_help'),
           type: 'textarea',
           setting: 'fof-pretty-mail.newPost',
           rows: 10,
