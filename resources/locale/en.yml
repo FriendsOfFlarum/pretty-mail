@@ -9,6 +9,7 @@ fof-pretty-mail:
         url: Flarum's <code>UrlGenerator</code>
         settings: Allows you to interact with the SettingsRepositoryInterface
         link: Contains the link within the email
+      attributes_label: Available attributes
       label: Email Templates
       reset: Revert to Default
       confirm: Are you sure you want to revert to the stock email template for

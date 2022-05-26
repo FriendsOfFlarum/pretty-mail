@@ -14,7 +14,7 @@ export default class PrettyMailSettingsPage extends ExtensionPage {
         <div className="container">
           <div className="Form-group">
             <h2>{app.translator.trans('fof-pretty-mail.admin.settings.label')}</h2>
-            <FieldSet label="Available attributes">
+            <FieldSet label={app.translator.trans('fof-pretty-mail.admin.settings.attributes_label')}>
               {this.templateAttributes().map((attribute) => {
                 return (
                   <p className="helpText">
