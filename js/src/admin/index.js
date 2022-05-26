@@ -1,6 +1,8 @@
 import app from 'flarum/admin/app';
-import SettingsPage from './components/SettingsPage';
+import PrettyMailSettingsPage from './components/PrettyMailSettingsPage';
+
+export * from './components';
 
 app.initializers.add('fof-pretty-mail', () => {
-    app.extensionData.for('fof-pretty-mail').registerPage(SettingsPage);
+    app.extensionData.for('fof-pretty-mail').registerPage(PrettyMailSettingsPage);
 });
