@@ -22,7 +22,7 @@ class PrettyMail implements ExtenderInterface
      * 
      * @return self
      */
-    public function addTemplateData(string $key, mixed $callback): self
+    public function addTemplateData(string $key, $callback): self
     {
         $this->data[$key] = $callback;
         
