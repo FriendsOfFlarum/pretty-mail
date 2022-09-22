@@ -34,10 +34,8 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
     protected $view;
 
     /**
-     * @var SettingsRepositoryInterface
+     * @var UrlGenerator
      */
-    protected $settings;
-
     protected $url;
 
     /**
@@ -49,10 +47,9 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
 
     public function __construct(Mailer $mailer, View $view, SettingsRepositoryInterface $settings, TranslatorInterface $translator, UrlGenerator $url, Paths $paths)
     {
-        parent::__construct($mailer, $translator);
+        parent::__construct($mailer, $translator, $settings);
 
         $this->view = $view;
-        $this->settings = $settings;
         $this->url = $url;
 
         $this->assets_dir = $paths->public.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR;
