@@ -107,6 +107,7 @@ class NotificationMailer extends \Flarum\Notification\NotificationMailer
             ]));
         }
 
+        /** @phpstan-ignore-next-line */
         $this->mailer->html(
             $view,
             function (Message $message) use ($blueprint, $user) {
