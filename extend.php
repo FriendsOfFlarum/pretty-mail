@@ -30,6 +30,7 @@ return [
             if ($serializer->getActor()->isAdmin()) {
                 $attributes['fof-pretty-mail.extra-template-attrs'] = array_keys(resolve('fof-pretty-mail.additional-data'));
             }
+
             return $attributes;
         }),
 ];
