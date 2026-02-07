@@ -30,7 +30,7 @@ class Mailer extends LaravelMailer
      */
     protected $assets_dir;
 
-    public function __construct(string $name, Factory $views, Swift_Mailer $swift, Dispatcher $events = null)
+    public function __construct(string $name, Factory $views, Swift_Mailer $swift, ?Dispatcher $events = null)
     {
         parent::__construct($name, $views, $swift, $events);
 

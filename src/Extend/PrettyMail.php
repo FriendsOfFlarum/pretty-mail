@@ -39,7 +39,7 @@ class PrettyMail implements ExtenderInterface
         return $this;
     }
 
-    public function extend(Container $container, Extension $extension = null)
+    public function extend(Container $container, ?Extension $extension = null)
     {
         $container->extend('fof-pretty-mail.additional-data', function ($items) {
             return array_merge($items, $this->data);
